@@ -1,0 +1,16 @@
+{
+  "name": "assignment-2",
+  "version": "1.0.0",
+  "description": "Webapp maker static pages",
+  "main": "server.js",
+  "scripts": {
+    "test": "console.log(\"server starting\");",
+    "start": "node server.js"
+  },
+  "author": "amitbanne",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.14.0"
+  },
+  "devDependencies": {}
+}
