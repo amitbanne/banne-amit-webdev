@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <meta charset="UTF-8">
+    <title>Edit Page</title>
+    <link rel="stylesheet" href="css/page-edit.css">
+</head>
+
+<body>
+<nav class="navbar navbar-default navbar-fixed-top">
+    <div class="container-fluid">
+        <div class="navbar-inner">
+            <p class="navbar-text pull-left">
+                <span id="glyphi-back" class="glyphicon glyphicon-chevron-left"></span>
+            </p>
+            <a class="navbar-brand" href="#">Edit Page</a>
+
+            <p class="navbar-text pull-right">
+                <span id="glyphi-head" class="glyphicon glyphicon-ok"></span>
+            </p>
+        </div>
+    </div>
+</nav>
+<div class="new-page-container">
+    <form>
+        <div class="form-group">
+            <label for="websiteName">Website Name</label>
+            <input type="text" id="websiteName" class="form-control" placeholder="Blogger"><br>
+            <label for="websiteDescription">Description</label>
+            <!--<input type="text" id="websiteDescription" class="form-control" placeholder="Description" max="5"><br>-->
+            <textarea id="websiteDescription" class="form-control" placeholder="Description" rows="5"></textarea><br>
+            <a href="page-list.html" class="btn btn-danger btn-block">Delete</a>
+        </div>
+    </form>
+</div>
+
+
+<nav class="navbar navbar-default navbar-fixed-bottom">
+    <div class="container-fluid">
+        <div class="navbar-inner">
+            <p class="navbar-text pull-right">
+                <span id="glyphi-foot" class="glyphicon glyphicon-user"></span>
+            </p>
+        </div>
+    </div>
+</nav>
+
+</body>
+</html>

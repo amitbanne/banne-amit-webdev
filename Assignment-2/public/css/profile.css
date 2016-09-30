@@ -1,4 +1,6 @@
-
+.container{
+    height: auto;
+}
 
 .navbar {
     background-color: #0083c3;
