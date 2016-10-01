@@ -24,6 +24,15 @@
     display: inline;
 }
 
+
+.navbar-inner#nav-bar-header{
+    display: inline;
+}
+
+#nav-bar-inner-header{
+    display: inline;
+}
+
 #website-new{
     margin-left: 0.2%;
 }
@@ -56,15 +65,18 @@
 a.list-group-item{
     color: #0083c3;
     margin-right: 15px;
+    border: none;
 }
 
-@media screen and (min-width: 0px) and (max-width: 600px){
+
+/* nav min header*/
+#min-nav-header{
+    display: none;
+}
+
+@media screen and (min-width: 0px) and (max-width: 500px){
 
     .list-group{
-        display: none;
-    }
-
-    .nav-website-list{
         display: none;
     }
 
@@ -72,14 +84,21 @@ a.list-group-item{
         display: inline;
     }
 
-    .new-website-container{
-        margin-top: 65px;
-        margin-right: 20px;
-        margin-left: 20px;
+    #min-nav-header{
+        display: block;
     }
-
-    #glyphi-head-plus, #website-list{
+    #max-nav-header{
         display: none;
     }
+
+    .col-sm-9.row.nav-new-website{
+        display: inline;
+    }
+
+    #nav-bar-inner-header{
+        display: inline;
+    }
+
+
 
 }

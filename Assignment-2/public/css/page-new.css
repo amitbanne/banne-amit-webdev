@@ -10,6 +10,12 @@
     color: black;
 }
 
+
+/*footer text*/
+#navbar-text-footer{
+    color: #0083c3;
+}
+
 .new-page-container{
     margin-top: 65px;
     margin-right: 40px;
@@ -17,7 +23,7 @@
 }
 
 .navbar-inner{
-    margin-right: 15px;
+    margin-right: 16px;
 }
 
 
