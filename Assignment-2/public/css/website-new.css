@@ -18,6 +18,7 @@
     margin-top: 65px;
     margin-right: 100px;
     margin-left: 20px;
+    height: 100%;
 }
 
 .website-combined-view{
@@ -72,6 +73,15 @@ a.list-group-item{
 /* nav min header*/
 #min-nav-header{
     display: none;
+}
+
+.v-divider{
+    margin-top:50px;
+    margin-left:5px;
+    margin-right:5px;
+    width:10px;
+    height:100%;
+    border-left:1px solid black;
 }
 
 @media screen and (min-width: 0px) and (max-width: 500px){
