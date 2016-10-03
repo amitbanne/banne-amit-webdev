@@ -25,11 +25,11 @@
     }
 
     body {
-        padding-top: 105px;
+        padding-top: 65px;
     }
-    .navbar-inner{
+    /*.navbar-inner{
         display: inline;
-    }
+    }*/
 }
 
 
@@ -42,7 +42,11 @@
         padding-top: 65px;
     }
 
-    .navbar-inner{
+    /*.navbar-inner{
         display: inline;
-    }
+    }*/
+}
+
+.glyphi{
+    color: white;
 }

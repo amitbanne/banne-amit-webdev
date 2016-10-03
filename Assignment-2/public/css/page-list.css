@@ -35,38 +35,14 @@ a.list-group-item{
     border: none;
 }
 
-/*@media screen and (min-width: 0px) and (max-width: 600px){*/
+.glyphi{
+    color: black;
+}
 
-    /*.website-list-container{*/
-        /*margin-top: 65px;*/
-        /*margin-right: 18px;*/
-        /*margin-left: 20px;*/
-    /*}*/
+.glyphi-1{
+    margin-right: 20px;
+}
 
-    /*.navbar-inner{*/
-        /*margin-right: 15px;*/
-    /*}*/
-
-
-    /*a.list-group-item{*/
-        /*color: #0083c3;*/
-        /*margin-right: 15px;*/
-    /*}*/
-
-    /*a.list-group-item{*/
-        /*border: none;*/
-    /*}*/
-
-    /*.navbar-default .navbar-brand {*/
-        /*color: black;*/
-    /*}*/
-
-    /*.navbar-default .navbar-text {*/
-        /*color: black;*/
-    /*}*/
-
-    /*#glyphi-foot{*/
-        /*color:#0083c3;*/
-    /*}*/
-
-/*}*/
+.glyphi-2{
+    color: #0083c3;
+}

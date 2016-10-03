@@ -26,3 +26,16 @@ a.list-group-item{
     margin-right: 15px;
     border: none;
 }
+
+.glyphi{
+    color: white;
+}
+
+.glyphi-1{
+    color: #0083c3;
+    z-index: 1000;
+}
+
+.gly{
+    margin-right: 20px;
+}

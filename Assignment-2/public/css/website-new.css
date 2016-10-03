@@ -16,8 +16,8 @@
 
 .new-website-container{
     margin-top: 65px;
-    margin-right: 100px;
-    margin-left: 20px;
+    margin-right: 30px;
+    margin-left: 10px;
     height: 100%;
 }
 
@@ -84,31 +84,6 @@ a.list-group-item{
     border-left:1px solid black;
 }
 
-@media screen and (min-width: 0px) and (max-width: 500px){
-
-    .list-group{
-        display: none;
-    }
-
-    .navbar-inner{
-        display: inline;
-    }
-
-    #min-nav-header{
-        display: block;
-    }
-    #max-nav-header{
-        display: none;
-    }
-
-    .col-sm-9.row.nav-new-website{
-        display: inline;
-    }
-
-    #nav-bar-inner-header{
-        display: inline;
-    }
-
-
-
+.glyphi{
+    color: white;
 }
