@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <meta charset="UTF-8">
+    <title>Widget Header</title>
+    <link rel="stylesheet" href="../css/widget-header.css">
+</head>
+<body>
+<nav class="navbar navbar-default navbar-fixed-top">
+    <div class="container-fluid">
+        <div class="navbar-inner">
+            <div class="col-sm-12">
+                <div class="row">
+                    <p class="navbar-text pull-left">
+                        <a href="widget-list.view.client.html" id="glyphi-back" class="glyphicon glyphicon-chevron-left glyphi"></a>
+                    </p>
+                    <a class="navbar-brand" href="#">Widget Edit</a>
+
+                    <p class="navbar-text pull-right">
+                        <a href="widget-list.view.client.html" id="glyphi-head" class="glyphicon glyphicon-ok glyphi"></a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>
+
+<div class="widget-edit-container">
+    <form>
+        <div class="form-group">
+            <div class="col-sm-12">
+                <div class="row">
+                    <label for="widgetName">Name</label>
+                    <input type="text" id="widgetName" class="form-control" placeholder="Widget Name"><br>
+                    <label for="widgetText">Text</label>
+                    <input type="text" id="widgetText" class="form-control" placeholder="Widget Text"><br>
+                    <label for="widgetSize">Size</label>
+                    <input type="text" id="widgetSize" class="form-control" placeholder="3"><br>
+                    <a href="widget-list.view.client.html" class="btn btn-danger btn-block">Delete</a>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+<nav class="navbar navbar-default navbar-fixed-bottom">
+    <div class="container-fluid">
+        <div class="navbar-inner">
+            <div class="col-sm-12">
+                <div class="row">
+                    <p id="navbar-text-footer" class="navbar-text pull-right">
+                        <a href="../views/user/profile.view.client.html" id="glyphi-foot" class="glyphicon glyphicon-user glyphi-1"></a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>
+
+</body>
+</html>

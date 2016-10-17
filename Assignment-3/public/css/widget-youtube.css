@@ -1,0 +1,44 @@
+.navbar {
+    /*background-color: #0083c3;*/
+}
+
+.navbar-default .navbar-brand {
+    color: black;
+}
+
+.navbar-default .navbar-text {
+    color: black;
+}
+
+.widget-edit-container{
+    margin-top: 65px;
+    margin-right: 40px;
+    margin-left: 30px;
+}
+
+.navbar-inner{
+    margin-right: 15px;
+}
+
+#navbar-text-footer{
+    color: #0083c3;
+}
+
+
+a.list-group-item{
+    color: #0083c3;
+    margin-right: 15px;
+    border: none;
+}
+
+.glyphi{
+    color: black;
+}
+
+.glyphi-1{
+    color: black;
+}
+
+.blue{
+    color: #0083c3;
+}

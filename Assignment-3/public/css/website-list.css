@@ -1,0 +1,41 @@
+.navbar {
+    background-color: #0083c3;
+}
+
+.navbar-default .navbar-brand {
+    color: white;
+}
+
+.navbar-default .navbar-text {
+    color: white;
+}
+
+.website-list-container{
+    margin-top: 65px;
+    margin-right: 20px;
+    margin-left: 20px;
+}
+
+.navbar-inner{
+    margin-right: 15px;
+}
+
+
+a.list-group-item{
+    color: #0083c3;
+    margin-right: 15px;
+    border: none;
+}
+
+.glyphi{
+    color: white;
+}
+
+.glyphi-1{
+    color: #0083c3;
+    z-index: 1000;
+}
+
+.gly{
+    margin-right: 20px;
+}

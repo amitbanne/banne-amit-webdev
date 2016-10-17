@@ -1,0 +1,71 @@
+<!--
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular-route.min.js"></script>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+
+    <script src="app.js"></script>
+    <script src="config.js"></script>
+
+    &lt;!&ndash; controller imports begin&ndash;&gt;
+    <script src="views/user/user.controller.client.js"></script>
+    &lt;!&ndash; controller imports end&ndash;&gt;
+
+    &lt;!&ndash; service imports begin&ndash;&gt;
+    <script src="services/user.service.client.js"></script>
+    &lt;!&ndash; service imports end&ndash;&gt;
+
+    <meta charset="UTF-8">
+    <title>Profile</title>
+    <link rel="stylesheet" href="../css/profile.css">
+</head>
+<body>
+-->
+<link rel="stylesheet" href="../css/profile.css">
+<!--<div class="container">-->
+
+<nav class="navbar navbar-default navbar-fixed-top">
+    <div class="container-fluid">
+        <div class="navbar-inner">
+            <a class="navbar-brand" href="#">Profile</a>
+            <p class="navbar-text pull-right">
+                <a href="#/user/{{model.user._id}}" id="glyphi-head" class="glyphicon glyphicon-ok glyphi"></a>
+            </p>
+        </div>
+    </div>
+</nav>
+
+<form>
+    <div class="container">
+        <div>Here: {{model.user.username}}</div>
+        <div>And Here: {{model.id}}</div>
+        <input ng-model="model.user.username" type="text" id="username"  class="form-control"><br>
+        <input type="email" id="email" class="form-control" placeholder="email"><br>
+        <input ng-model="model.user.firstName" type="text" id="first" class="form-control" ><br>
+        <input ng-model="model.user.lastName" type="text" id="last" class="form-control" ><br>
+        <a href="#/user/{{model.user._id}}/website" class="btn btn-primary btn-block">Websites</a>
+        <a href="#/login" class="btn btn-danger btn-block">Logout</a>
+    </div>
+</form>
+<!--</div>-->
+
+<nav class="navbar navbar-default navbar-fixed-bottom">
+    <div class="container-fluid">
+        <div class="navbar-inner">
+            <div class="col-sm-12">
+                <div class="row">
+                    <p class="navbar-text pull-right">
+                        <span id="glyphi-foot" class="glyphicon glyphicon-user glyphi"></span>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>
+
+<!--
+
+</body>
+</html>-->
