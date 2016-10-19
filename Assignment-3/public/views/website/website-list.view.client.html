@@ -1,3 +1,4 @@
+<!--
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,18 +8,21 @@
     <link rel="stylesheet" href="../css/website-list.css">
 </head>
 <body>
+-->
+
+<link rel="stylesheet" href="../css/website-list.css">
 <nav class="navbar navbar-default navbar-fixed-top">
     <div class="container-fluid">
         <div class="navbar-inner">
             <div class="col-sm-12">
                 <div class="row">
                     <p class="navbar-text pull-left">
-                        <a href="../views/user/profile.view.client.html" class="glyphicon glyphicon-chevron-left glyphi"></a>
+                        <a href="#/user/{{model.userId}}" class="glyphicon glyphicon-chevron-left glyphi"></a>
                     </p>
-                    <a class="navbar-brand" href="#">Websites</a>
+                    <a class="navbar-brand" href="#/user/{{model.userId}}/website/">Websites</a>
 
                     <p class="navbar-text pull-right">
-                        <a href="website-new.view.client.html" class="glyphicon glyphicon-plus glyphi"></a>
+                        <a href="#/user/{{model.userId}}/website/new" class="glyphicon glyphicon-plus glyphi"></a>
                     </p>
                 </div>
             </div>
@@ -29,8 +33,15 @@
 <div class="website-list-container">
     <div class="col-sm-12">
         <div class="row">
-            <div class="list-group">
+            <div ng-repeat="website in model.websites" class="list-group">
                 <a href="#" class="list-group-item">
+                    <a href="#/user/{{model.userId}}/website/{{website._id}}/page">{{website.name}}</a>
+                    <p class="pull-right">
+                        <a href="#/user/{{model.userId}}/website/{{website._id}}" class="glyphicon glyphicon-cog glyphi-1 gly"></a>
+                    </p>
+                </a>
+
+                <!--<a href="#" class="list-group-item">
                     <a href="../views/page/page-list.view.client.html">Address Book App</a>
                     <p class="pull-right">
                         <a href="website-edit.view.client.html" class="glyphicon glyphicon-cog glyphi-1 gly"></a>
@@ -53,7 +64,7 @@
                     <p class="pull-right">
                         <a href="website-edit.view.client.html" class="glyphicon glyphicon-cog glyphi-1 gly"></a>
                     </p>
-                </a>
+                </a>-->
             </div>
         </div>
 
@@ -64,11 +75,13 @@
     <div class="container-fluid">
         <div class="navbar-inner">
             <p class="navbar-text pull-right">
-                <a href="../views/user/profile.view.client.html" class="glyphicon glyphicon-user glyphi"></a>
+                <a href="#/user/{{model.userId}}" class="glyphicon glyphicon-user glyphi"></a>
             </p>
         </div>
     </div>
 </nav>
 
+<!--
+
 </body>
-</html>
+</html>-->

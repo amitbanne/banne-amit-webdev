@@ -14,12 +14,14 @@
             <div class="col-sm-12">
                 <div class="row">
                     <p class="navbar-text pull-left">
-                        <a href="page-list.view.client.html" class="glyphicon glyphicon-chevron-left glyphi"></a>
+                        <a href="#/user/{{model.userId}}/website/{{model.websiteId}}/page"
+                           class="glyphicon glyphicon-chevron-left glyphi"></a>
                     </p>
                     <a class="navbar-brand" href="#">Edit Page</a>
 
                     <p class="navbar-text pull-right">
-                        <a href="../user/profile.view.client.html" class="glyphicon glyphicon-user glyphi"></a>
+                        <a href ng-click="model.updatePage(model.userId, model.websiteId, model.pageId, model.page)"
+                           class="glyphicon glyphicon-ok glyphi"></a>
                     </p>
                 </div>
             </div>
@@ -32,10 +34,10 @@
             <div class="col-sm-12">
                 <div class="row">
                     <label for="pageName">Page Name</label>
-                    <input type="text" id="pageName" class="form-control" placeholder="Page Name"><br>
+                    <input ng-model="model.page.name" type="text" id="pageName" class="form-control"><br>
                     <label for="pageTitle">Title</label>
-                    <textarea id="pageTitle" class="form-control" placeholder="Page Title" rows="5"></textarea><br>
-                    <a href="page-list.view.client.html" class="btn btn-danger btn-block">Delete</a>
+                    <textarea ng-model="model.page.description" id="pageTitle" class="form-control" rows="5"></textarea><br>
+                    <a ng-click="model.deletePage(model.userId, model.websiteId, model.pageId)" class="btn btn-danger btn-block">Delete</a>
                 </div>
             </div>
         </div>
@@ -49,7 +51,7 @@
             <div class="col-sm-12">
                 <div class="row">
                     <p id="navbar-text-footer" class="navbar-text pull-right">
-                        <a href="../user/profile.view.client.html" class="glyphicon glyphicon-user glyphi-1"></a>
+                        <a href="#/user/{{model.userId}}" class="glyphicon glyphicon-user glyphi-1"></a>
                     </p>
                 </div>
             </div>

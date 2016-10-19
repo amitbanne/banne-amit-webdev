@@ -86,4 +86,5 @@ a.list-group-item{
 
 .glyphi{
     color: white;
+    pointer-events: all;
 }

@@ -13,23 +13,24 @@
         <div class="navbar-inner" id="nav-bar-inner-header">
             <div class="col-sm-3 hidden-xs" id="max-nav-header">
                 <p id="glyphi-back" class="navbar-text">
-                    <a href="website-list.view.client.html" class="glyphicon glyphicon-chevron-left glyphi"></a>
+                    <a href="#/user/{{model.userId}}/website/" class="glyphicon glyphicon-chevron-left glyphi"></a>
                 </p>
-                <a id="website-list" class="navbar-brand" href="#">Websites</a>
+                <a id="website-list" class="navbar-brand" href="#/user/{{model.userId}}/website/">Websites</a>
                 <p class="navbar-text pull-right">
-                    <a href="website-list.view.client.html" class="glyphicon glyphicon-plus glyphi"></a>
+                    <a href="#/user/{{model.userId}}/website/" class="glyphicon glyphicon-plus glyphi"></a>
                 </p>
             </div>
 
             <div class="col-sm-9">
                 <div class="row">
-                    <a class="navbar-text pull-left hidden-lg hidden-md hidden-sm" href="website-list.view.client.html">
+                    <a class="navbar-text pull-left hidden-lg hidden-md hidden-sm" href="#/user/{{model.userId}}/website/">
                         <span class="glyphicon glyphicon-chevron-left"></span>
                     </a>
                     <div class="nav-new-website">
                         <a id="website-new" class="navbar-brand" href="#">New Website</a>
                         <p class="navbar-text pull-right">
-                            <a href="website-list.view.client.html" class="glyphicon glyphicon-ok glyphi"></a>
+                            <a href ng-click="model.createWebsite(model.userId, model.website)"
+                               class="glyphicon glyphicon-ok glyphi"></a>
                         </p>
                     </div>
                 </div>
@@ -41,27 +42,13 @@
 <div class="row">
     <div class="col-sm-3 hidden-xs">
         <!--<div class="row">-->
-        <div class="list-group">
-            <a href="../views/page/page-list.view.client.html" class="list-group-item">
-                Address Book App
-                <p class="pull-right">
-                    <a href="website-edit.view.client.html" class="glyphicon glyphicon-cog glyphi"></a>
-                </p>
-            </a>
-            <a href="../views/page/page-list.view.client.html" class="list-group-item">Blogger
-                <p class="pull-right">
-                    <a href="website-edit.view.client.html" class="glyphicon glyphicon-cog glyphi"></a>
-                </p>
-            </a>
-            <a href="../views/page/page-list.view.client.html" class="list-group-item">Blogging App
-                <p class="pull-right">
-                    <a href="website-edit.view.client.html" class="glyphicon glyphicon-cog glyphi"></a>
-                </p>
-            </a>
-            <a href="../views/page/page-list.view.client.html" class="list-group-item">Script Testing App
-                <p class="pull-right">
-                    <a href="website-edit.view.client.html" class="glyphicon glyphicon-cog glyphi"></a>
-                </p>
+        <div ng-repeat="website in model.websites" class="list-group">
+            <a href="#" class="list-group-item">
+                <a href="#/user/{{model.userId}}/website/{{website._id}}/page">{{website.name}}</a>
+                <a href="#/user/{{model.userId}}/website/{{website._id}}" class="glyphicon glyphicon-cog glyphi-1 gly pull-right"></a>
+                <!--<p class="pull-right">
+
+                </p>-->
             </a>
         </div>
         <!--</div>-->
@@ -69,12 +56,12 @@
 
     <div class="col-sm-9">
             <div class="new-website-container">
-                <form>
+                <form name="websiteForm" id="websiteForm">
                     <div class="form-group">
                         <label for="websiteName">Name</label>
-                        <input type="text" id="websiteName" class="form-control" placeholder="Name"><br>
+                        <input ng-model="model.website.name" type="text" id="websiteName" class="form-control" placeholder="Name"><br>
                         <label for="websiteDescription">Description</label>
-                        <textarea id="websiteDescription" class="form-control" placeholder="Description" rows="5"></textarea>
+                        <textarea ng-model="model.website.description" id="websiteDescription" class="form-control" placeholder="Description" rows="5"></textarea>
                     </div>
                 </form>
             </div>
@@ -85,7 +72,7 @@
     <div class="container-fluid">
         <div class="navbar-inner">
             <p class="navbar-text pull-right">
-                <a href="../views/user/profile.view.client.html" class="glyphicon glyphicon-user glyphi"></a>
+                <a href="#/user/{{model.userId}}" class="glyphicon glyphicon-user glyphi"></a>
             </p>
         </div>
     </div>
