@@ -11,11 +11,12 @@
     <div class="container-fluid">
         <div class="navbar-inner">
             <p class="navbar-text pull-left">
-                <a href="widget-list.view.client.html" class="glyphicon glyphicon-chevron-left glyphi"></a>
+                <a href="#/user/{{model.userId}}/website/{{model.websiteId}}/page/{{model.pageId}}/widget/"
+                   class="glyphicon glyphicon-chevron-left glyphi"></a>
             </p>
             <a class="navbar-brand" href="#">Choose Widget</a>
             <p class="navbar-text pull-right">
-                <a href="widget-list.view.client.html" class="glyphicon glyphicon-plus glyphi"></a>
+                <a href="#" class="glyphicon glyphicon-plus glyphi"></a>
             </p>
         </div>
     </div>
@@ -24,11 +25,11 @@
     <div class="list-group">
         <div class="col-sm-12">
             <div class="row">
-                <a href="widget-header.view.client.html" class="list-group-item">Header
+                <a href ng-click="model.createNew('HEADER')" class="list-group-item">Header
                 </a>
                 <a href="#" class="list-group-item">Lable
                 </a>
-                <a href="#" class="list-group-item">HTML
+                <a href ng-click="model.createNew('HTML')" class="list-group-item">HTML
                 </a>
                 <a href="#" class="list-group-item">
                     Text Input
@@ -37,9 +38,9 @@
                 </a>
                 <a href="#" class="list-group-item">Button
                 </a>
-                <a href="widget-image.view.client.html" class="list-group-item">Image
+                <a href ng-click="model.createNew('IMAGE')" class="list-group-item">Image
                 </a>
-                <a href="widget-youtube.view.client.html" class="list-group-item">
+                <a href ng-click="model.createNew('YOUTUBE')" class="list-group-item">
                     YouTube
                 </a>
                 <a href="#" class="list-group-item">Data Table
@@ -59,7 +60,7 @@
             <div class="col-sm-12">
                 <div class="row">
                     <p id="navbar-text-footer" class="navbar-text pull-right">
-                        <a href="../views/user/profile.view.client.html" id="glyphi-foot" class="glyphicon glyphicon-user glyphi-1"></a>
+                        <a href="#/user/{{model.userId}}" id="glyphi-foot" class="glyphicon glyphicon-user glyphi-1"></a>
                     </p>
                 </div>
             </div>

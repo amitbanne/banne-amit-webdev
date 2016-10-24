@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <meta charset="UTF-8">
+    <title>Edit Widget</title>
+    <link rel="stylesheet" href="../css/widget-edit.css">
+</head>
+<body>
+
+<nav class="navbar navbar-default navbar-fixed-top">
+    <div class="container-fluid">
+        <div class="navbar-inner">
+            <div class="col-sm-12">
+                <div class="row">
+                    <p class="navbar-text pull-left">
+                        <a href="#/user/{{model.userId}}/website/{{model.websiteId}}/page/{{model.pageId}}/widget"
+                           class="glyphicon glyphicon-chevron-left glyphi"></a>
+                    </p>
+                    <a class="navbar-brand" href="#">Widgets</a>
+                    <p class="navbar-text pull-right">
+                        <a href ng-click="model.createOrUpdateWidget(model.widgetType, model.widget, model.createOrUpdate, model.widgetId)"
+                           class="glyphicon glyphicon-ok glyphi"></a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>
+
+<div class="widget-edit-container">
+    <form>
+        <div ng-switch="model.widgetType">
+            <div ng-switch-when="HEADER">
+                <div ng-include="'views/widget/widget-header-view.client.html'"> included</div>
+            </div>
+            <div ng-switch-when="HTML">
+                <div ng-include="'views/widget/widget-html-view.client.html'"></div>
+            </div>
+            <div ng-switch-when="IMAGE">
+                <div ng-include="'views/widget/widget-image-view.client.html'"></div>
+            </div>
+            <div ng-switch-when="YOUTUBE">
+                <div ng-include="'views/widget/widget-youtube-view.client.html'"></div>
+            </div>
+        </div>
+    </form>
+
+
+</div>
+
+<nav class="navbar navbar-default navbar-fixed-bottom">
+    <div class="container-fluid">
+        <div class="navbar-inner">
+            <div class="col-sm-12" id="footer-div">
+                <div>
+                    <p id="navbar-text-footer-left" class="navbar-text pull-left">
+                        <a href="#" class="glyphicon glyphicon-play pull-left black"></a>
+                        <a href="#" id="glyphi-left" class="glyphicon glyphicon-eye-open pull-left black"></a>
+                    </p>
+                </div>
+                <div>
+                    <p id="navbar-text-footer" class="navbar-text pull-right">
+                        <a href="#/user/{{model.userId}}" class="glyphicon glyphicon-user glyphi-1 blue"></a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>
+
+</body>
+</html>

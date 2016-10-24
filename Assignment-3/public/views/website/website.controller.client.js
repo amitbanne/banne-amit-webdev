@@ -7,7 +7,7 @@
 
 
 
-    function WebsiteListController($location, WebsiteService,$routeParams){
+    function WebsiteListController(WebsiteService,$routeParams){
 
         var vm = this;
 
