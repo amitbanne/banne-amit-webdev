@@ -1,0 +1,87 @@
+<!--
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <meta charset="UTF-8">
+    <title>Websites</title>
+    <link rel="stylesheet" href="../css/website-list.css">
+</head>
+<body>
+-->
+
+<link rel="stylesheet" href="../css/website-list.css">
+<nav class="navbar navbar-default navbar-fixed-top">
+    <div class="container-fluid">
+        <div class="navbar-inner">
+            <div class="col-sm-12">
+                <div class="row">
+                    <p class="navbar-text pull-left">
+                        <a href="#/user/{{model.userId}}" class="glyphicon glyphicon-chevron-left glyphi"></a>
+                    </p>
+                    <a class="navbar-brand" href="#/user/{{model.userId}}/website/">Websites</a>
+
+                    <p class="navbar-text pull-right">
+                        <a href="#/user/{{model.userId}}/website/new" class="glyphicon glyphicon-plus glyphi"></a>
+                    </p>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</nav>
+<div class="website-list-container">
+    <div class="col-sm-12">
+        <div class="row">
+            <div ng-repeat="website in model.websites" class="list-group">
+                <a href="#" class="list-group-item">
+                    <a href="#/user/{{model.userId}}/website/{{website._id}}/page">{{website.name}}</a>
+                    <p class="pull-right">
+                        <a href="#/user/{{model.userId}}/website/{{website._id}}" class="glyphicon glyphicon-cog glyphi-1 gly"></a>
+                    </p>
+                </a>
+
+                <!--<a href="#" class="list-group-item">
+                    <a href="../views/page/page-list.view.client.html">Address Book App</a>
+                    <p class="pull-right">
+                        <a href="website-edit.view.client.html" class="glyphicon glyphicon-cog glyphi-1 gly"></a>
+                    </p>
+                </a>
+                <a href="#" class="list-group-item">
+                    <a href="../views/page/page-list.view.client.html">Blogger</a>
+                    <p class="pull-right">
+                        <a href="website-edit.view.client.html" class="glyphicon glyphicon-cog glyphi-1 gly"></a>
+                    </p>
+                </a>
+                <a href="#" class="list-group-item">
+                    <a href="../views/page/page-list.view.client.html">Blogging App</a>
+                    <p class="pull-right">
+                        <a href="website-edit.view.client.html" class="glyphicon glyphicon-cog glyphi-1 gly"></a>
+                    </p>
+                </a>
+                <a href="#" class="list-group-item">
+                    <a href="../views/page/page-list.view.client.html">Script Testing App</a>
+                    <p class="pull-right">
+                        <a href="website-edit.view.client.html" class="glyphicon glyphicon-cog glyphi-1 gly"></a>
+                    </p>
+                </a>-->
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<nav class="navbar navbar-default navbar-fixed-bottom">
+    <div class="container-fluid">
+        <div class="navbar-inner">
+            <p class="navbar-text pull-right">
+                <a href="#/user/{{model.userId}}" class="glyphicon glyphicon-user glyphi"></a>
+            </p>
+        </div>
+    </div>
+</nav>
+
+<!--
+
+</body>
+</html>-->

@@ -1,0 +1,48 @@
+.navbar {
+    /*background-color: #0083c3;*/
+}
+
+#glyphi-foot{
+    color:#0083c3;
+}
+
+.navbar-default .navbar-brand {
+    color: black;
+}
+
+.navbar-default .navbar-text {
+    color: black;
+}
+
+.website-list-container{
+    margin-top: 60px;
+    margin-right: 18px;
+    margin-left: 20px;
+}
+
+.navbar-inner{
+    margin-right: 1%;
+    margin-left: 1%;
+}
+
+
+a.list-group-item{
+    color: #0083c3;
+    margin-right: 1%;
+}
+
+a.list-group-item{
+    border: none;
+}
+
+.glyphi{
+    color: black;
+}
+
+.glyphi-1{
+    margin-right: 20px;
+}
+
+.glyphi-2{
+    color: #0083c3;
+}

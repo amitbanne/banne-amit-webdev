@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular-route.min.js"></script>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+
+    <script src="app.js"></script>
+    <script src="config.js"></script>
+
+    <!-- controller imports begin-->
+    <script src="views/user/login.controller.client.js"></script>
+    <!-- controller imports end-->
+
+    <!-- service imports begin-->
+    <script src="services/user.service.client.js"></script>
+    <!-- service imports end-->
+
+
+    <meta charset="UTF-8">
+    <title>Login</title>
+</head>
+<body>
+<form>
+
+    <div class="container">
+
+        <h1>Login</h1>
+        <div ng-show="model.loginError" class="alert alert-danger" role="alert">{{model.loginError}}</div>
+        <input type="text" ng-model="model.user.username" id="username" class="form-control" placeholder="username"><br>
+        <input type="password" ng-model="model.user.password" id="password" class="form-control" placeholder="password"><br>
+        <!--<a href="#/profile" class="btn btn-primary btn-block">Login</a>-->
+        <!--<a ng-click="model.login(model.user.username,model.user.password)" class="btn btn-primary btn-block">Login</a>-->
+        <a ng-click="model.login(model.user)" class="btn btn-primary btn-block">Login</a>
+        <a href="#/register" class="btn btn-success btn-block">Register</a>
+    </div>
+</form>
+</body>
+</html>
