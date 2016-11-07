@@ -58,6 +58,7 @@
             <div class="new-website-container">
                 <form name="websiteForm" id="websiteForm">
                     <div class="form-group">
+                        <div ng-show="model.websiteNewMessage" class="alert alert-danger" role="alert">{{model.websiteNewMessage}}</div>
                         <label for="websiteName">Name</label>
                         <input ng-model="model.website.name" type="text" id="websiteName" class="form-control" placeholder="Name"><br>
                         <label for="websiteDescription">Description</label>

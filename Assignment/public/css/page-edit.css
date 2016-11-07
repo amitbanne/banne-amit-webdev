@@ -31,6 +31,13 @@ a.list-group-item{
     margin-right: 15px;
 }
 
+
+a.list-group-item{
+    color: #0083c3;
+    margin-right: 15px;
+    border: none;
+}
+
 .glyphi{
     color: black;
 }

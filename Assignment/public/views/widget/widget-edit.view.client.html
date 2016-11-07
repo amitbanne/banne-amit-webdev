@@ -29,6 +29,7 @@
 </nav>
 
 <div class="widget-edit-container">
+    <div ng-show="model.editWidgetMessage" class="alert alert-danger" role="alert">{{model.editWidgetMessage}}</div>
     <form>
         <div ng-switch="model.widgetType">
             <div ng-switch-when="HEADER">

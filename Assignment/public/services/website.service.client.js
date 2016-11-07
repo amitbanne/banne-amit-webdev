@@ -4,7 +4,7 @@
         .factory("WebsiteService", WebsiteService);
 
 
-    function WebsiteService() {
+    function WebsiteService($http) {
 
         var websites = [
             {"_id": "123", "name": "Facebook", "developerId": "456", "description":"this is facebook"},
@@ -26,43 +26,28 @@
         return api;
 
         function createWebsite(userId, website){
-            var webId = new Date();
-            website.developerId = userId;
-            website._id = webId;
-            websites.push(websites.length, website);
+           var url = '/api/user/'+userId+'/website';
+            return $http.post(url, website);
         }
 
         function findWebsitesByUser(userId){
-            var results = [];
-            for(var u in websites){
-                var website = websites[u];
-                if(website.developerId == userId)
-                    results.push(website);
-            }
-            return results;
+            var url = '/api/user/'+userId+'/website';
+            return $http.get(url);
         }
 
         function findWebsiteById(websiteId){
-            for(var u in websites){
-                var website = websites[u];
-                if(website._id == websiteId)
-                    return website;
-            }
-            return null;
+            var url = '/api/website/'+websiteId;
+            return $http.get(url);
         }
 
         function updateWebsite(websiteId, website) {
-            for(var u in websites){
-                if(websites[u]._id == websiteId){
-                    websites[u].name = website.name;
-                    websites[u].description = website.description;
-                    return;
-                }
-            }
+            var url = '/api/website/'+websiteId;
+            return $http.put(url,website);
         }
 
         function deleteWebsite(websiteId){
-            websites.splice(websiteId,1);
+            var url = '/api/website/'+websiteId;
+            return $http.delete(url);
         }
     }
 

@@ -44,26 +44,16 @@
             var url = '/api/user?username='+username+'&password='+password;
             return $http.get(url);
         }
+
         function updateUser(_id, user){
-            for(var u in users){
-                var user = users[u];
-                if( user._id == _id){
-                    // remove the existing user record
-                    users.splice(u,1);
-                    // insert the new record
-                    users.push(user);
-                }
-            }
+            var url = '/api/user/'+_id;
+            return $http.put(url, user);
         }
 
         function deleteUser(_id){
-            for(var u in users){
-                var user = users[u];
-                if(user._id == _id){
-                    // remove the existing user record
-                    users.splice(u,1);
-                }
-            }
+            console.log("Delete client service: "+_id);
+            var url = '/api/user/'+_id;
+            return $http.delete(url);
         }
 
     }

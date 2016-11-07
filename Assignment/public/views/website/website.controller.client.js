@@ -13,7 +13,21 @@
 
         function init(){
             vm.userId = $routeParams.uid;
-            vm.websites = WebsiteService.findWebsitesByUser(vm.userId);
+            var promise = WebsiteService.findWebsitesByUser(vm.userId);
+            promise
+                .success(function (websites) {
+                    if(websites.length == 0){
+                        vm.websites = {};
+                        vm.websiteListMessage = "No websites found for the user. Try creating one.";
+                    }else{
+                        vm.websites = websites;
+                        vm.id = vm.userId;
+                        console.log("ID: " + vm.id);
+                    }
+                })
+                .error(function (websites) {
+                    vm.websiteListMessage = "Website fetch for user failed. Please try again";
+                })
         }
         init();
 
@@ -25,16 +39,39 @@
 
         function init(){
             vm.userId = $routeParams.uid;
-            vm.websites = WebsiteService.findWebsitesByUser(vm.userId);
+            var promise = WebsiteService.findWebsitesByUser(vm.userId);
+            promise
+                .success(function (websites) {
+                    if(websites.length == 0){
+                        vm.websites = {};
+                    }else{
+                        vm.websites = websites;
+                        vm.id = vm.userId;
+                        console.log("ID: " + vm.id);
+                    }
+                })
+                .error(function (user) {
+                    vm.websiteNewMessage = "Website fetch for user failed. Please try again";
+                })
         }
         init();
 
         function createWebsite(userId, website){
-            vm.userId = $routeParams.uid;
-            WebsiteService.createWebsite(userId, website);
-            $location.url("/user/" +userId+"/website");
-
+            var promise = WebsiteService.createWebsite(userId, website);
+            promise
+                .success(function (websites) {
+                        vm.websites = websites;
+                        vm.userId = userId;
+                        vm.id = vm.userId;
+                        console.log("ID: " + vm.id);
+                        $location.url("/user/" + vm.userId+'/website');
+                })
+                .error(function (user) {
+                    vm.websiteNewMessage = "New Website Creation failed. Please try again";
+                    $location.url("/user/" + vm.userId+'/website/new');
+                })
         }
+
     }
 
     function EditWebsiteController($location, WebsiteService, $routeParams){
@@ -45,23 +82,60 @@
         function init(){
             vm.userId = $routeParams.uid;
             vm.websiteId = $routeParams.wid;
-            vm.website = WebsiteService.findWebsiteById(vm.websiteId);
-            vm.websites = WebsiteService.findWebsitesByUser(vm.userId);
 
+            var promiseById = WebsiteService.findWebsiteById(vm.websiteId);
+            promiseById
+                .success(function (website) {
+                    console.log("W CTR: "+website);
+                    vm.website = website;
+                })
+                .error(function (website) {
+                })
+
+            var promiseByUser = WebsiteService.findWebsitesByUser(vm.userId);
+            promiseByUser
+                .success(function (websites) {
+                    vm.websites = websites;
+                })
+                .error(function (websites) {
+                    vm.websiteEditError = "Website for the user could not be fetched. Please try again";
+                })
         }
         init();
 
         function updateWebsite(userId, websiteId, website){
-            WebsiteService.updateWebsite(websiteId, website);
-            $location.url("/user/" +userId+"/website");
+            var promise = WebsiteService.updateWebsite(websiteId, website);
+            promise
+                .success(function (msg) {
+                    if(msg == '200'){
+                        $location.url("/user/" +userId+"/website");
+                    }else{
+                        vm.websiteEditError = "Website edit could not be saved. Please try again";
+                    }
+                })
+                .error(function (msg) {
+                    vm.websiteEditError = "Website edit could not happen. Please try again";
+                })
         }
 
         function deleteWebsite(userId, websiteId) {
-            console.log("Inside delete");
-            WebsiteService.deleteWebsite(websiteId);
-            vm.websites = WebsiteService.findWebsitesByUser(userId);
-            vm.userId = userId;
-            $location.url("/user/" +userId+"/website");
+            var promiseDelete = WebsiteService.deleteWebsite(websiteId);
+            promiseDelete
+                .success(function () {
+
+                    var promiseByUser = WebsiteService.findWebsitesByUser(vm.userId);
+                    promiseByUser
+                        .success(function (websites) {
+                            vm.websites = websites;
+                            $location.url("/user/" +userId+"/website");
+                        })
+                        .error(function (websites) {
+                            vm.websiteEditError = "Something went wrong. Please go back and try again";
+                        })
+                })
+                .error(function () {
+                    vm.websiteEditError = "Website delete failed. Please try again";
+                })
         }
     }
 

@@ -5,26 +5,45 @@
         .controller("NewWidgetController",NewWidgetController)
         .controller("EditWidgetController",EditWidgetController);
 
-    function WidgetListController($location, WidgetService,$routeParams, $sce) {
+    function WidgetListController($location, WidgetService,$routeParams, $sce, $rootScope) {
             var vm = this;
             vm.checkSafeHTML = checkSafeHTML;
             vm.formatYoutubeLink =formatYoutubeLink;
             vm.checkSafeImage = checkSafeImage;
             vm.updateWidget = updateWidget;
             vm.addNewWidget = addNewWidget;
+            vm.sortWidgets = sortWidgets;
             vm.createNew=createNew;
-            vm.deleteWidget = deleteWidget;
         function init() {
             vm.userId = $routeParams.uid;
             vm.websiteId = $routeParams.wid;
             vm.pageId = $routeParams.pid;
-            vm.widgets = WidgetService.findWidgetsByPageId(vm.pageId);
-            console.log("WidgetListController init "+ vm.userId);
+            $rootScope.pageId = vm.pageId;
 
+            console.log('PAGE: '+ vm.pageId);
 
+            var promise = WidgetService.findWidgetsByPageId(vm.pageId);
+            promise
+                .success(function (widgets) {
+                    if(widgets.length == 0){
+                        vm.widgetListMessage = 'No widgets found for the page. Try creating one';
+                    }else{
+                        vm.widgets = widgets;
+                        $("jga-sortable").sortable();
+                    }
+                })
+                .error(function (widgets) {
+                    vm.widgetListMessage = 'Something went wrong while fetching widgets for the page. Please try again';
+                })
         };
         init();
-        
+
+        function sortWidgets(start, end) {
+            console.log("in controller: "+start+", "+end);
+            WidgetService.sortWidgets(vm.pageId, start, end);
+        }
+
+
         function checkSafeHTML(html) {
             return $sce.trustAsHtml(html);
         }
@@ -36,6 +55,7 @@
         }
 
         function checkSafeImage(imageURL) {
+            console.log("IMAGE SAFE: "+imageURL);
             return $sce.trustAsResourceUrl(imageURL);
         }
         
@@ -44,7 +64,7 @@
         }
         
         function updateWidget(widget) {
-            console.log("update widget: "+ widget._id);
+            console.log("update widget list: "+ widget._id);
             vm.widget = widget;
             vm.widgetType = widget.type;
             vm.isUpdate = "UPDATE";
@@ -53,17 +73,13 @@
         }
 
         function createNew(widgetType){
-            console.log("list controller");
+            console.log("list controller new ");
             vm.widgetId = "123";
             vm.createOrUpdate = "CREATE";
             vm.widgetType = widgetType;
             $location.url("/user/"+vm.userId+"/website/"+vm.websiteId+"/page/"+vm.pageId+"/widget/"+wid);
         }
-        
-        function deleteWidget(widgetId) {
-            console.log("delete widget "+ widgetId);
-        }
-        
+
     }
 
     function NewWidgetController($location, WidgetService,$routeParams){
@@ -76,6 +92,16 @@
             vm.websiteId = $routeParams.wid;
             vm.pageId = $routeParams.pid;
             vm.createOrUpdate = "CREATE";
+
+            var promise = WidgetService.findWidgetsByPageId(vm.pageId);
+            promise
+                .success(function (widgets) {
+                    vm.widgets = widgets;
+                    $("jga-sortable").sortable();
+                })
+                .error(function (widgets) {
+                    
+                })
         }
         init();
 
@@ -86,9 +112,16 @@
             vm.widgetType = widgetType;
             vm.widget = getDummyWidget(widgetType, vm.pageId);
 
-            vm.widget = WidgetService.createWidget(vm.pageId, vm.widget)
-            vm.widgetId = vm.widget._id;
-            $location.url("/user/"+vm.userId+"/website/"+vm.websiteId+"/page/"+vm.pageId+"/widget/"+vm.widgetId);
+            var promise = WidgetService.createWidget(vm.pageId, vm.widget);
+            promise
+                .success(function (widget) {
+                    vm.widget = widget;
+                    vm.widgetId = vm.widget._id;
+                    $location.url("/user/"+vm.userId+"/website/"+vm.websiteId+"/page/"+vm.pageId+"/widget/"+vm.widgetId);
+                })
+                .error(function (widget) {
+                    vm.newWidgetMessage = 'Something went wrong. Please try again';
+                })
         }
 
         function getDummyWidget(widgetType, pageId){
@@ -107,12 +140,30 @@
 
         function createOrUpdateWidget(widgetType, widget, createOrUpdate, widgetId){
             if(createOrUpdate == "CREATE") {
-                WidgetService.createWidget(vm.pageId, widget);
-                $location.url("/user/" + vm.userId + "/website/" + vm.websiteId + "/page/" + vm.pageId + "/widget/");
+                var promise = WidgetService.createWidget(vm.pageId, vm.widget);
+                promise
+                    .success(function (widget) {
+                        $location.url("/user/" + vm.userId + "/website/" + vm.websiteId + "/page/" + vm.pageId + "/widget/");
+                    })
+                    .error(function (widget) {
+                        vm.newWidgetMessage = 'Something went wrong. Please try again';
+                    })
             }else{
                 widget.type = widgetType;
-                WidgetService.udpateWidget(widgetId, widget);
-                $location.url("/user/" + vm.userId + "/website/" + vm.websiteId + "/page/" + vm.pageId + "/widget/");
+
+                var promise = WidgetService.updateWidget(widgetId, widget);
+                promise
+                    .success(function (status) {
+                        if(status == '200'){
+                            $location.url("/user/" + vm.userId + "/website/" + vm.websiteId + "/page/" + vm.pageId + "/widget/");
+                        }else{
+                            vm.newWidgetMessage = 'Something went wrong. Please try again';
+                        }
+                    })
+                    .error(function (status) {
+
+                    })
+
             }
         }
     }
@@ -129,22 +180,38 @@
             vm.widgetId = $routeParams.wgid;
 
             console.log("EDIT ID: "+ vm.widgetId);
-            vm.widget = WidgetService.findWidgetById(vm.widgetId);
-            console.log("EDIT TYPE: "+ vm.widget.widgetType);
+            var promise = WidgetService.findWidgetById(vm.widgetId);
 
-            vm.widgetType = vm.widget.widgetType;
-            vm.lowercasewidgettype = vm.widgetType.toLowerCase();
-
-            console.log("LOWER CASE: "+vm.lowercasewidgettype);
-
-            console.log("edit controller end : "+vm.widgetType);
-            //vm.createOrUpdate = "UPDATE";
+            promise
+                .success(function (widget) {
+                    if(widget == '0'){
+                        vm.editWidgetMessage = 'Something went wrong. Please try again';
+                    }else{
+                        vm.widget =widget;
+                        vm.widgetType = vm.widget.widgetType;
+                        vm.lowercasewidgettype = vm.widgetType.toLowerCase();
+                    }
+                })
+                .error(function (widget) {
+                    
+                })
         }
         init();
 
         function deleteWidget(widgetId) {
-            WidgetService.deleteWidget(widgetId);
-            $location.url("/user/" + vm.userId + "/website/" + vm.websiteId + "/page/" + vm.pageId + "/widget/");
+
+            var promise = WidgetService.deleteWidget(widgetId);
+            promise
+                .success(function (status) {
+                    if(status == '200'){
+                        $location.url("/user/" + vm.userId + "/website/" + vm.websiteId + "/page/" + vm.pageId + "/widget/");
+                    }else{
+                        vm.editWidgetMessage = 'Deleting the widget failed. Please try again';
+                    }
+                })
+                .error(function (status) {
+                    vm.editWidgetMessage = 'Deleting the widget failed. Please try again';
+                })
         }
 
         function createOrUpdateWidget(widgetType, widget, createOrUpdate, widgetId){
@@ -161,8 +228,30 @@
                 console.log("edit createOrUpdateWidget edit: "+ widgetType);
                 console.log("inside edit "+ widgetId);
                 widget.type = widgetType;
-                WidgetService.updateWidget(widgetId, widget);
-                $location.url("/user/" + vm.userId + "/website/" + vm.websiteId + "/page/" + vm.pageId + "/widget/");
+                console.log(widget);
+
+                var promiseUpdate = WidgetService.updateWidget(widgetId, widget);
+                promiseUpdate
+                    .success(function (status) {
+                        if(status == '200'){
+                            console.log("Update success for "+widgetId);
+                            var promiseFetchWidgets =  WidgetService.findWidgetsByPageId(vm.pageId);
+                            promiseFetchWidgets
+                                .success(function (widgets) {
+                                    vm.widgets =widgets;
+                                    $location.url("/user/" + vm.userId + "/website/" + vm.websiteId + "/page/" + vm.pageId + "/widget/");
+                                })
+                                .error(function (widgets) {
+                                    console.log("Update failed");
+                                })
+                        }else{
+                            vm.editWidgetMessage = 'Editing the widget failed. Please try again';
+                        }
+                    })
+                    .error(function (status) {
+                        vm.editWidgetMessage = 'Editing the widget failed. Please try again';
+                    })
+
             }
         }
 

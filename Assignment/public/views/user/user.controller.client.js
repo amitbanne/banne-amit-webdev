@@ -12,17 +12,24 @@
         // authenticate user
         function login(checkUser) {
 
-            var promise = UserService.findUserByCredentials(checkUser.username, checkUser.password)
+            var promise = UserService.findUserByCredentials(checkUser.username, checkUser.password);
             promise
                 .success(function (user) {
-                    console.log("user retrieved: "+user);
-                    vm.user = user;
-                    vm.id = vm.user._id;
-                    console.log("ID: " + vm.id);
-                    $location.url("/user/" + vm.user._id);
+                    if(user =='0'){
+                        vm.loginError = "No such user exists";
+                        $location.url("/login");
+                    }else{
+                        console.log("user retrieved: "+user);
+                        vm.user = user;
+                        vm.id = vm.user._id;
+                        console.log("ID: " + vm.id);
+                        $location.url("/user/" + vm.user._id);
+                    }
                 })
                 .error(function (user) {
+                    console.log("No user exists");
                     vm.loginError = "No such user exists";
+                    $location.url("/login");
                 })
         }
     }
@@ -31,39 +38,25 @@
         var vm = this;
         vm.register = register;
 
-        function init() {
-            var user = {
-                username: "abc",
-                password: "pwd"
-            }
-            vm.user = user;
-        }
-        
         function register(user) {
 
-            console.log("USer: "+user);
-
             var promise = UserService.createUser(user);
-
             promise
                 .success(function (user) {
-                    console.log("user retrieved: "+user);
-                    vm.user = user;
-                    vm.id = vm.user._id;
-                    console.log("ID: " + vm.id);
-                    $location.url("/user/" + vm.user._id);
+                    if(user =='0'){
+                        vm.registerError = "Registration failed. Please try again";
+                        $location.url("/register");
+                    }else{
+                        console.log("user retrieved: "+user);
+                        vm.user = user;
+                        vm.id = vm.user._id;
+                        console.log("ID: " + vm.id);
+                        $location.url("/user/" + vm.user._id);
+                    }
                 })
                 .error(function (user) {
-                    vm.loginError = "No such user exists";
+                    vm.registerError = "Registration failed. Please try again"
                 })
-
-            if (user === null)
-                vm.registerError = "Oops.Something went wrong. Please try again";
-            else {
-                vm.user = user;
-                $location.url("/user/" + vm.user._id);
-            }
-            // }
         }
     }
 
@@ -71,6 +64,8 @@
 
         var vm = this;
         vm.findUserById = findUserById;
+        vm.updateUser = updateUser;
+        vm.deleteUser = deleteUser;
 
         function init() {
             console.log("ID IN PROFILE: " + $routeParams.uid);
@@ -85,17 +80,54 @@
                 .success(function (user) {
                     console.log("user retrieved: "+user);
                     if(user == '0'){
+                        console.log("error");
                         vm.loginError = "No such user exists";
+                        $location.url("/login");
                     }else{
                         vm.user = user;
                         vm.id = vm.user._id;
-                        console.log("ID: " + vm.id);
+                        console.log("PROFILE ID: " + vm.id);
                         $location.url("/user/" + vm.user._id);
                     }
                 })
                 .error(function (user) {
                     vm.loginError = "No such user exists";
+                    $location.url("/login");
+
                 })
         }
+        
+        function updateUser(user) {
+            var promise  = UserService.updateUser(user._id, user);
+            promise
+                .success(function (user) {
+                    if(user == '0'){
+                        vm.loginError = "No such user exists";
+                        $location.url("/login");
+                    }else{
+                        vm.user = user;
+                        vm.id = vm.user._id;
+                        console.log("PROFILE ID: " + vm.id);
+                        $location.url("/user/" + vm.user._id);
+                    }
+                })
+                .error(function (user) {
+                    vm.profileMessage = "Profile Update failed. Please try again.";
+                })
+        }
+        
+        function deleteUser() {
+            console.log("Delete client: "+vm.user._id);
+            var promise  = UserService.deleteUser(vm.user._id);
+            promise
+                .success(function (user) {
+                    if(user == '200')
+                        $location.url("/login");
+                })
+                .error(function (user) {
+                    vm.profileMessage = "Cannot delete account. Please try again.";
+                })
+        }
+        
     }
 })();

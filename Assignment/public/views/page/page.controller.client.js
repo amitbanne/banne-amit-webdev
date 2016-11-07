@@ -11,7 +11,18 @@
         function init(){
             vm.userId = $routeParams.uid;
             vm.websiteId = $routeParams.wid;
-            vm.pages = PageService.findPageByWebsiteId(vm.websiteId);
+            var promise = PageService.findPageByWebsiteId(vm.websiteId);
+            promise
+                .success(function (pages) {
+                    if(pages.length == 0){
+                        vm.pageListError = 'No Pages found for the website. Try creating one.';
+                    }else{
+                        vm.pages = pages;
+                    }
+                })
+                .error(function (pages) {
+                    vm.pageListError = 'Something went wrong. Please try loging in again.';
+                })
         }
         init();
 
@@ -24,16 +35,32 @@
         function init(){
             vm.userId = $routeParams.uid;
             vm.websiteId = $routeParams.wid;
-            vm.pages = PageService.findPageByWebsiteId(vm.websiteId);
+
+            var promise = PageService.findPageByWebsiteId(vm.websiteId);
+            promise
+                .success(function (pages) {
+                    if(pages.length == 0){
+                    }else{
+                        vm.pages = pages;
+                    }
+                })
+                .error(function (pages) {
+                })
+
         }
         init();
 
         function createPage(userId,websiteId, page){
-            PageService.createPage(websiteId,page);
-            vm.userId = userId;
-            $location.url("/user/" +userId+"/website/"+websiteId+"/page");
+            var promise = PageService.createPage(websiteId,page);
+            promise
+                .success(function (pages) {
+                    vm.pages = pages;
+                    $location.url("/user/" +userId+"/website/"+websiteId+"/page");
+                })
+                .error(function (pages) {
+                    vm.newPageError = 'New Page creation failed. Please try again.';
+                })
         }
-
     }
 
     function EditPageController($location, PageService, $routeParams){
@@ -46,29 +73,59 @@
             vm.userId = $routeParams.uid;
             vm.websiteId = $routeParams.wid;
             vm.pageId = $routeParams.pid;
-            vm.page = PageService.findPageById(vm.pageId);
-            vm.pages = PageService.findPageByWebsiteId(vm.websiteId);
+            var promiseById = PageService.findPageById(vm.pageId);
+            promiseById
+                .success(function (page) {
+                    vm.page = page;
+                })
+                .error(function (page) {
+                    vm.newPageError = 'Page details could not be fetched. Please try again.';
+                })
+
+            var promiseByWebsiteID = PageService.findPageByWebsiteId(vm.websiteId);
+            promiseByWebsiteID
+                .success(function (pages) {
+                    vm.pages = pages;
+                })
+                .error(function (pages) {
+
+                })
         }
         init();
 
         function updatePage(userId,websiteId,pageId, page) {
-            PageService.updatePage(pageId, page);
-            vm.userId = userId;
-            vm.websiteId = websiteId;
-            $location.url("/user/" +userId+"/website/"+websiteId+"/page");
+            var promise = PageService.updatePage(pageId, page);
+            promise
+                .success(function (status) {
+                    if(status == '200'){
+                        vm.userId = userId;
+                        vm.websiteId = websiteId;
+                        $location.url("/user/" +userId+"/website/"+websiteId+"/page");
+                    }else{
+                        vm.editPageError = 'Editing the page failed. Please try again.';
+                    }
+                })
+                .error(function (status) {
+                    vm.editPageError = 'Editing the page failed. Please try again.';
+                })
         }
 
         function deletePage(userId,websiteId,pageId) {
-            PageService.deletePage(pageId);
-            vm.userId = userId;
-            vm.websiteId = websiteId;
-            $location.url("/user/" +userId+"/website/"+websiteId+"/page");
+            var promise = PageService.deletePage(pageId);
+            promise
+                .success(function (status) {
+                    if(status == '200'){
+                        vm.userId = userId;
+                        vm.websiteId = websiteId;
+                        $location.url("/user/" +userId+"/website/"+websiteId+"/page");
+                    }else{
+                        vm.editPageError = 'Deleting the page failed. Please try again.';
+                    }
+                })
+                .error(function (status) {
+                    vm.editPageError = 'Deleting the page failed. Please try again.';
+                })
         }
-
-
     }
-
-
-
 
 })();
