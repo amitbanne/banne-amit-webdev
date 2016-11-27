@@ -17,6 +17,7 @@
                     if(pages.length == 0){
                         vm.pageListError = 'No Pages found for the website. Try creating one.';
                     }else{
+
                         vm.pages = pages;
                     }
                 })
@@ -39,12 +40,10 @@
             var promise = PageService.findPageByWebsiteId(vm.websiteId);
             promise
                 .success(function (pages) {
-                    if(pages.length == 0){
-                    }else{
                         vm.pages = pages;
-                    }
                 })
                 .error(function (pages) {
+                    // do nothing
                 })
 
         }
@@ -53,8 +52,8 @@
         function createPage(userId,websiteId, page){
             var promise = PageService.createPage(websiteId,page);
             promise
-                .success(function (pages) {
-                    vm.pages = pages;
+                .success(function (res) {
+                    vm.pages = PageService.findPageByWebsiteId(websiteId);
                     $location.url("/user/" +userId+"/website/"+websiteId+"/page");
                 })
                 .error(function (pages) {
@@ -77,6 +76,14 @@
             promiseById
                 .success(function (page) {
                     vm.page = page;
+                    var promiseList = PageService.findPageByWebsiteId(vm.websiteId);
+                    promiseList
+                        .success(function (pages) {
+                            vm.pages = pages;
+                        })
+                        .error(function (pages) {
+                            // do nothing
+                        })
                 })
                 .error(function (page) {
                     vm.newPageError = 'Page details could not be fetched. Please try again.';
@@ -85,7 +92,7 @@
             var promiseByWebsiteID = PageService.findPageByWebsiteId(vm.websiteId);
             promiseByWebsiteID
                 .success(function (pages) {
-                    vm.pages = pages;
+                    vm.pages = PageService.findPageByWebsiteId(vm.websiteId);
                 })
                 .error(function (pages) {
 
@@ -100,6 +107,14 @@
                     if(status == '200'){
                         vm.userId = userId;
                         vm.websiteId = websiteId;
+                        var promiseList = PageService.findPageByWebsiteId(vm.websiteId);
+                        promiseList
+                            .success(function (pages) {
+                                vm.pages = pages;
+                            })
+                            .error(function (pages) {
+                                // do nothing
+                            })
                         $location.url("/user/" +userId+"/website/"+websiteId+"/page");
                     }else{
                         vm.editPageError = 'Editing the page failed. Please try again.';
@@ -117,6 +132,14 @@
                     if(status == '200'){
                         vm.userId = userId;
                         vm.websiteId = websiteId;
+                        var promiseList = PageService.findPageByWebsiteId(vm.websiteId);
+                        promiseList
+                            .success(function (pages) {
+                                vm.pages = pages;
+                            })
+                            .error(function (pages) {
+                                // do nothing
+                            })
                         $location.url("/user/" +userId+"/website/"+websiteId+"/page");
                     }else{
                         vm.editPageError = 'Deleting the page failed. Please try again.';

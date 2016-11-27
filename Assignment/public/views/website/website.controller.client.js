@@ -16,7 +16,7 @@
             var promise = WebsiteService.findWebsitesByUser(vm.userId);
             promise
                 .success(function (websites) {
-                    if(websites.length == 0){
+                    if(websites.length == 0 || websites[0] == null){
                         vm.websites = {};
                         vm.websiteListMessage = "No websites found for the user. Try creating one.";
                     }else{
@@ -107,6 +107,7 @@
             var promise = WebsiteService.updateWebsite(websiteId, website);
             promise
                 .success(function (msg) {
+                    console.log("Website Edit in EC:  "+msg);
                     if(msg == '200'){
                         $location.url("/user/" +userId+"/website");
                     }else{
@@ -122,7 +123,6 @@
             var promiseDelete = WebsiteService.deleteWebsite(websiteId);
             promiseDelete
                 .success(function () {
-
                     var promiseByUser = WebsiteService.findWebsitesByUser(vm.userId);
                     promiseByUser
                         .success(function (websites) {
