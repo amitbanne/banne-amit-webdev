@@ -5,7 +5,7 @@ module.exports = function () {
         name: String,
         title: String,
         description: String,
-        // widgets: [{type: mongoose.Schema.Types.ObjectId, ref: 'WidgetModel'}],
+        widgets: [{type: mongoose.Schema.Types.ObjectId, ref: 'WidgetModel'}],
         dateCreated: Date
     },{collection:"pages"});
     return PageSchema;

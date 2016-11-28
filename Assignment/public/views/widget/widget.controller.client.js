@@ -28,6 +28,7 @@
                     if(widgets.length == 0){
                         vm.widgetListMessage = 'No widgets found for the page. Try creating one';
                     }else{
+
                         vm.widgets = widgets;
                         $("jga-sortable").sortable();
                     }
@@ -115,6 +116,8 @@
             var promise = WidgetService.createWidget(vm.pageId, vm.widget);
             promise
                 .success(function (widget) {
+                    console.log("NEW WIDGET CREATED NC:*  "+ widget._id);
+
                     vm.widget = widget;
                     vm.widgetId = vm.widget._id;
                     $location.url("/user/"+vm.userId+"/website/"+vm.websiteId+"/page/"+vm.pageId+"/widget/"+vm.widgetId);
@@ -127,13 +130,13 @@
         function getDummyWidget(widgetType, pageId){
             var widget = {};
             if(widgetType == "HEADER"){
-                widget = {"widgetType": "HEADER", "pageId": pageId, "size": 2, "text": ""};
+                widget = {"type": "HEADER", "pageId": pageId, "size": 2, "text": ""};
             }else if(widgetType == "IMAGE"){
-                widget = {"widgetType": "IMAGE", "pageId": pageId, "width": "100%", "url": "http://lorempixel.com/400/200/", "text": "Sample Image"};
+                widget = {type: "IMAGE", "pageId": pageId, "width": "100%", "url": "http://lorempixel.com/400/200/", "text": "Sample Image"};
             }else if(widgetType == "YOUTUBE"){
-                widget = {"widgetType": "YOUTUBE", "pageId": pageId, "width": "100%", "url": "https://youtu.be/AM2Ivdi9c4E"};
+                widget = {"type": "YOUTUBE", "pageId": pageId, "width": "100%", "url": "https://youtu.be/AM2Ivdi9c4E"};
             }else if(widgetType == "HTML"){
-                widget = {"widgetType": "HTML", "pageId": pageId, "text": "<p>Lorem ipsum muspi meroL</p>"};
+                widget = {"type": "HTML", "pageId": pageId, "text": "<p>Lorem ipsum muspi meroL</p>"};
             }
             return widget;
         }
@@ -188,7 +191,7 @@
                         vm.editWidgetMessage = 'Something went wrong. Please try again';
                     }else{
                         vm.widget =widget;
-                        vm.widgetType = vm.widget.widgetType;
+                        vm.widgetType = vm.widget.type;
                         vm.lowercasewidgettype = vm.widgetType.toLowerCase();
                     }
                 })

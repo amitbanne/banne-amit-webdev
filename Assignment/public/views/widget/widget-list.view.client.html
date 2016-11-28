@@ -34,10 +34,10 @@
     <form class="form-group">
 
         <div ng-show="model.widgetListMessage"  class="alert alert-danger" role="alert">{{model.widgetListMessage}}</div>
-        <div class="sortableWidgets" pageId="{{model.pageId}}">
+        <div class="sortableWidgets">
             <div style="display: none"></div>
 
-        <div ng-switch="widget.widgetType" ng-repeat="widget in model.widgets" class="list-group">
+        <div ng-switch="widget.type" ng-repeat="widget in model.widgets" class="list-group">
             <li class="list-group-item">
                 <div class="block1">
                     <div ng-switch="widget.size" ng-switch-when="HEADER">
@@ -55,7 +55,7 @@
 
                     <div ng-switch-when="HTML" ng-bind-html="model.checkSafeHTML(widget.text)">
                     </div>
-                    <div ng-switch-when="YOUTUBE">
+                    <div ng-switch-when="YOUTUBE" class="youtube-widget">
                         <iframe class="video-frame" height="400" width="{{widget.width}}"
                                 src="{{model.formatYoutubeLink(widget.url)}}"
                                 frameborder="0" allowfullscreen></iframe>

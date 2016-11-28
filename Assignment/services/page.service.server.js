@@ -22,8 +22,8 @@ module.exports = function(app, model) {
         res.send(pages);*/
 
         model.pageModel.createPage(websiteId, page)
-            .then(function (page) {
-                res.json(page);
+            .then(function (pageObj) {
+                res.json(pageObj);
             });
     }
     

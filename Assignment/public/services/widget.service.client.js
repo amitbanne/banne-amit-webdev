@@ -46,7 +46,8 @@
             var index2 = end;
             var pageID = $rootScope.pageId;
             console.log("PAGE ID IN SERVICE: "+pageID);
-            var url = "/page/:"+pageID+"/widget?initial="+index1+"&final="+index2;
+            console.log(start+"=>"+end);
+            var url = "/page/"+pageID+"/widget?initial="+index1+"&final="+index2;
             return $http.put(url);
         }
 }

@@ -12,7 +12,7 @@ module.exports = function () {
         findWidgetById: findWidgetById,
         updateWidget: updateWidget,
         deleteWidget: deleteWidget,
-        reorderWidget:reorderWidget
+        reorderWidget: reorderWidget
     }
     return api;
 
@@ -21,17 +21,22 @@ module.exports = function () {
     }
     
     function createWidget(pageId, widget) {
+        console.log("Inside model create widget: "+ widget.type);
         widget.dateCreated = new Date();
-        widget._website = websiteId;
+        widget._page = pageId;
         return WidgetModel
             .create(widget)
             .then(function (widgetObj) {
-                model.pageModel
+                return widgetObj;
+
+               /* model.pageModel
                     .addWidgetToPage(pageId, widgetObj._id)
                     .then(function (widgets) {
-                        console.log("Update widgets for website: "+ widgets);
-                        return widgets;
-                    });
+                        console.log("new widget: "+ widgetObj._id);
+                        console.log("widgets for page: "+ widgets.widgets);
+                        // console.log("update widgets for page: "+ widgetobj.name);
+                        return widgetObj;
+                    });*/
             });
     }
 
@@ -45,7 +50,7 @@ module.exports = function () {
 
     function updateWidget(widgetId, widget) {
 
-        if(widget.widgetType == 'HEADER'){
+        if(widget.type == 'HEADER'){
             console.log("Update header");
            /* widgets[w].size = widget.size;
             widgets[w].text = widget.text;*/
@@ -58,7 +63,7 @@ module.exports = function () {
 
                     });
 
-        }else if(widget.widgetType == 'IMAGE'){
+        }else if(widget.type == 'IMAGE'){
             console.log("Update image");
             /*widgets[w].width = widget.width;
             widgets[w].url = widget.url;*/
@@ -68,10 +73,9 @@ module.exports = function () {
                     {
                         width: widget.width,
                         url: widget.url,
-
                     });
 
-        }else if(widget.widgetType == 'YOUTUBE'){
+        }else if(widget.type == 'YOUTUBE'){
             console.log("Update youtube");
             /*widgets[w].width = widget.width;
             widgets[w].url = widget.url;*/
@@ -81,10 +85,9 @@ module.exports = function () {
                     {
                         width: widget.width,
                         url: widget.url,
-
                     });
 
-        }else if(widget.widgetType == 'HTML'){
+        }else if(widget.type == 'HTML'){
             console.log("Update html");
             // widgets[w].text = widget.text;
 
@@ -94,6 +97,8 @@ module.exports = function () {
                         text: widget.text,
                     });
         }
+
+
     }
 
     function deleteWidget(widgetId) {
@@ -107,4 +112,10 @@ module.exports = function () {
                     })
             });
     }
+    
+    function reorderWidget(pageId, start, end) {
+        console.log("Inside widget model sort: "+ pageId);
+        return model.pageModel.reorderWidgetForPage(pageId, start, end);
+    }
+    
 }

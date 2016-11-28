@@ -14,7 +14,8 @@ module.exports = function () {
         deletePage: deletePage,
         addWidgetToPage: addWidgetToPage,
         deleteWidgetForPage: deleteWidgetForPage,
-        findAllWidgetsForPage: findAllWidgetsForPage
+        findAllWidgetsForPage: findAllWidgetsForPage,
+        reorderWidgetForPage: reorderWidgetForPage
     }
     return api;
 
@@ -78,8 +79,15 @@ module.exports = function () {
 
     function findAllWidgetsForPage(pageId) {
         return PageModel.findById(pageId)
-            .populate("widgets", "name")
+            .populate("widgets")
             .exec();
+    }
+
+
+    function reorderWidgetForPage(pageId, start, end) {
+        var widgetsForPage  = PageModel.findPageById(pageId).widgets;
+        console.log("$Page: "+pageId);
+        console.log("WIDGETS FOR PAGE: "+ widgetsForPage.length);
     }
     
 }
