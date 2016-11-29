@@ -14,7 +14,7 @@
                 <a href="#/user/{{model.userId}}/website/{{model.websiteId}}/page/{{model.pageId}}/widget/"
                    class="glyphicon glyphicon-chevron-left glyphi"></a>
             </p>
-            <a class="navbar-brand" href="#">Choose Widget</a>
+            <a class="navbar-brand" href="#/user/{{model.userId}}/website/{{model.websiteId}}/page/{{model.pageId}}/widget/">Choose Widget</a>
             <p class="navbar-text pull-right">
                 <a href="#" class="glyphicon glyphicon-plus glyphi"></a>
             </p>
@@ -31,7 +31,7 @@
                 </a>
                 <a href ng-click="model.createNew('HTML')" class="list-group-item">HTML
                 </a>
-                <a href="#" class="list-group-item">
+                <a href ng-click="model.createNew('TEXT')" class="list-group-item">
                     Text Input
                 </a>
                 <a href="#" class="list-group-item">Link

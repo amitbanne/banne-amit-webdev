@@ -14,7 +14,9 @@ module.exports = function(app,model) {
             "url": "https://youtu.be/AM2Ivdi9c4E" },
         { "_id": "789", "widgetType": "HTML", "pageId": "321", "text": "<p>Lorem ipsum</p>"}
     ];
-    app.put("/page/:pageId/widget?initial=index1&final=index2", sortWidgets);
+
+    app.put('/page/:pageId/widget', sortWidgets);
+    // app.put('/page/:pageId/widget?initial=index1&final=index2', sortWidgets);
     app.post ('/api/upload', upload.single('widgetImage'), uploadImage);
     app.post('/api/page/:pageId/widget',createWidget);
     app.get('/api/page/:pageId/widget', findAllWidgetsForPage);
@@ -75,15 +77,11 @@ module.exports = function(app,model) {
 
         var pageId = req.params.pageId;
         var widget = req.body;
-        console.log("Before");
         return model.widgetModel.createWidget(pageId, widget)
             .then(function (widgetObj) {
-                console.log("NEW WIDGET SERVICE#: "+ widgetObj);
                 return model.pageModel
                     .addWidgetToPage(pageId, widgetObj._id)
                     .then(function (widgets) {
-                        console.log("new widget: "+ widgetObj._id);
-                        console.log("widgets for page: "+ widgets.widgets);
                         // console.log("update widgets for page: "+ widgetobj.name);
                         res.json(widgetObj);
                     });
@@ -101,11 +99,9 @@ module.exports = function(app,model) {
     function findAllWidgetsForPage(req, res) {
 
         var pageId = req.params.pageId;
-        console.log('SERVER FETCH WIDGETs for page: '+pageId);
 
         model.pageModel.findAllWidgetsForPage(pageId)
             .then(function (resObj) {
-                console.log("Widgets for page: "+resObj.widgets);
                 // console.log("Total Widgets for page: "+resObj.widgets.length);
                 res.json(resObj.widgets);
             })
@@ -122,7 +118,6 @@ module.exports = function(app,model) {
 
     function findWidgetById(req, res) {
         var widgetId = req.params.widgetId;
-        console.log('SERVER FETCH WIDGET: '+widgetId);
 
         return model.widgetModel.findWidgetById(widgetId)
             .then(function (widget) {
@@ -141,8 +136,6 @@ module.exports = function(app,model) {
     function updateWidget(req, res) {
         var widgetId = req.params.widgetId;
         var widget = req.body;
-        console.log("Updating widget: "+widgetId);
-        console.log("EDIT TYPE: "+widget.type);
 
         return model
             .widgetModel.updateWidget(widgetId, widget)
@@ -186,15 +179,20 @@ module.exports = function(app,model) {
 
     function deleteWidget(req, res) {
         var widgetId = req.params.widgetId;
-        return model.widgetModel.deleteWidget(widgetId)
-            .then(
+        console.log("DELETE widget: "+widgetId);
+         model.widgetModel.deleteWidget(widgetId)
+             .then(function () {
+                 res.send('200');
+             });
+            /*.then(
                 function (status) {
+                    console.log("here widget deleted");
                     return res.send('200');
                 },
                 function (error) {
                     return res.send('0');
                 }
-            );
+            );*/
     }
 
     function sortWidgets(req, res) {

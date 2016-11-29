@@ -21,22 +21,12 @@ module.exports = function () {
     }
     
     function createWidget(pageId, widget) {
-        console.log("Inside model create widget: "+ widget.type);
         widget.dateCreated = new Date();
         widget._page = pageId;
         return WidgetModel
             .create(widget)
             .then(function (widgetObj) {
                 return widgetObj;
-
-               /* model.pageModel
-                    .addWidgetToPage(pageId, widgetObj._id)
-                    .then(function (widgets) {
-                        console.log("new widget: "+ widgetObj._id);
-                        console.log("widgets for page: "+ widgets.widgets);
-                        // console.log("update widgets for page: "+ widgetobj.name);
-                        return widgetObj;
-                    });*/
             });
     }
 
@@ -51,7 +41,6 @@ module.exports = function () {
     function updateWidget(widgetId, widget) {
 
         if(widget.type == 'HEADER'){
-            console.log("Update header");
            /* widgets[w].size = widget.size;
             widgets[w].text = widget.text;*/
 
@@ -64,7 +53,6 @@ module.exports = function () {
                     });
 
         }else if(widget.type == 'IMAGE'){
-            console.log("Update image");
             /*widgets[w].width = widget.width;
             widgets[w].url = widget.url;*/
 
@@ -76,7 +64,6 @@ module.exports = function () {
                     });
 
         }else if(widget.type == 'YOUTUBE'){
-            console.log("Update youtube");
             /*widgets[w].width = widget.width;
             widgets[w].url = widget.url;*/
 
@@ -88,7 +75,6 @@ module.exports = function () {
                     });
 
         }else if(widget.type == 'HTML'){
-            console.log("Update html");
             // widgets[w].text = widget.text;
 
             return WidgetModel
@@ -96,26 +82,43 @@ module.exports = function () {
                     {
                         text: widget.text,
                     });
+        }else if(widget.type == 'TEXT'){
+            // widgets[w].text = widget.text;
+
+            return WidgetModel
+                .update({_id: widgetId},
+                    {
+                        text: widget.text,
+                        rows: widget.rows,
+                        placeholder: widget.placeholder,
+                        formatted: widget.formatted
+                    });
         }
 
 
     }
 
     function deleteWidget(widgetId) {
-        var pageId = WidgetModel.findById(widgetId)._page;
-
-        return WidgetModel.remove({_id: widgetId})
-            .then(function (res) {
-                model.pageModel.deleteWidgetForPage(pageId, widgetId)
-                    .then(function (pageObj) {
-                        console.log("Website deleted and : "+pageObj);
-                    })
+        console.log("delete widget model: "+ widgetId);
+        return WidgetModel.findById(widgetId)
+            .then(function (widgetObj) {
+                var pageId = widgetObj._page;
+                console.log("here 1");
+                return WidgetModel.remove({_id: widgetId})
+                    .then(function (res) {
+                        console.log("here 2");
+                        return model.pageModel.deleteWidgetForPage(pageId, widgetId)
+                            .then(function (pageObj) {
+                                console.log("here 3");
+                            });
+                    });
             });
+
     }
     
     function reorderWidget(pageId, start, end) {
         console.log("Inside widget model sort: "+ pageId);
         return model.pageModel.reorderWidgetForPage(pageId, start, end);
     }
-    
+
 }

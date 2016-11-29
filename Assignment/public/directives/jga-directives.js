@@ -35,6 +35,7 @@
             vm.sort = sort;
 
             function sort (start, end) {
+                console.log("Sorting directive: "+ start+","+ end);
                 WidgetService.sortWidgets(start, end);
             }
         }

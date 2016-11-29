@@ -32,8 +32,6 @@ module.exports = function(app, model) {
 
         return model.pageModel.findAllPagesForWebsite(websiteId)
             .then(function (resObj) {
-                console.log("Pages for website: "+resObj.pages);
-                console.log("Total Pages for website: "+resObj.pages.length);
                 res.json(resObj.pages);
             })
 

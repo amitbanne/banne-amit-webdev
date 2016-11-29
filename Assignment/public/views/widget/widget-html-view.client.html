@@ -1,15 +1,26 @@
 
+<link rel="stylesheet" href="../../css/textAngular.css">
 <div class="widget-edit-container">
-    <form>
+    <div ng-model="model.widget.text"
+         text-angular
+         ta-toolbar="[['h1','h2','h3'],['bold','italics','underline','strikeThrough'],
+        ['ul','ol'],['justifyLeft','justifyCenter','justifyRight','justifyFull'],
+        ['indent','outdent'],['html']]">
+
+    </div>
+    <br/>
+    <a ng-click="model.deleteWidget(model.widget._id)"
+       class="btn btn-danger btn-block">Delete</a>
+    <!--<form>
         <div class="form-group">
             <div class="col-sm-12">
-                <div class="row">
                     <label for="widgetText">Text</label>
-                    <input ng-model="model.widget.text" type="text" id="widgetText" class="form-control" ><br>
-                    <a ng-click="model.deleteWidget(model.widget._id)"
-                       class="btn btn-danger btn-block">Delete</a>
+                    &lt;!&ndash;<input ng-model="model.widget.text" type="text" id="widgetText" class="form-control">&ndash;&gt;
+                    <input ng-model="model.widget.text" type="text" id="widgetText" class="form-control">
+                    <br>
+
                 </div>
             </div>
         </div>
-    </form>
+    </form>-->
 </div>

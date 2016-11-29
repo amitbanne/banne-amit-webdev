@@ -31,7 +31,6 @@ module.exports = function () {
                 model.userModel
                     .addWebsiteToUser(userId, websiteObj._id)
                     .then(function (websites) {
-                        console.log("Update Websites for user: "+ websites);
                         return websites;
                     });
             });
@@ -56,14 +55,16 @@ module.exports = function () {
     }
 
     function deleteWebsite(websiteId) {
-        var userId = WebsiteModel.findById(websiteId)._user;
-
-        return WebsiteModel.remove({_id: websiteId})
-            .then(function (res) {
-                model.userModel.deleteWebsiteForUser(userId, websiteId)
-                    .then(function (userObj) {
-                        console.log("Website deleted and : "+userObj);
-                    })
+        return WebsiteModel.findById(websiteId)
+            .then(function (websiteObj) {
+                var userId = websiteObj._user;
+                return WebsiteModel.remove({_id: websiteId})
+                    .then(function (res) {
+                        model.userModel.deleteWebsiteForUser(userId, websiteId)
+                            .then(function (userObj) {
+                                return '200';
+                            })
+                    });
             });
     }
 

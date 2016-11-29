@@ -137,6 +137,8 @@
                 widget = {"type": "YOUTUBE", "pageId": pageId, "width": "100%", "url": "https://youtu.be/AM2Ivdi9c4E"};
             }else if(widgetType == "HTML"){
                 widget = {"type": "HTML", "pageId": pageId, "text": "<p>Lorem ipsum muspi meroL</p>"};
+            }else if(widgetType == "TEXT"){
+                widget = {"type": "TEXT", "pageId": pageId, "text": "", "rows": 1, "placeholder":"", "formatted": false};
             }
             return widget;
         }
@@ -206,6 +208,7 @@
             var promise = WidgetService.deleteWidget(widgetId);
             promise
                 .success(function (status) {
+                    console.log("status in del wid controller: "+ status);
                     if(status == '200'){
                         $location.url("/user/" + vm.userId + "/website/" + vm.websiteId + "/page/" + vm.pageId + "/widget/");
                     }else{

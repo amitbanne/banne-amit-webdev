@@ -32,7 +32,6 @@ module.exports = function () {
                 model.websiteModel
                     .addPageToWebsite(websiteId, pageObj._id)
                     .then(function (pages) {
-                        console.log("Update pages for website: "+ pages);
                         return pages;
                     });
             });
@@ -58,14 +57,16 @@ module.exports = function () {
     }
 
     function deletePage(pageId) {
-        var websiteId = PageModel.findById(pageId)._website;
+        return PageModel.findById(pageId)
+            .then(function (pageObj) {
+                var websiteId = pageObj._website;
+                return PageModel.remove({_id: pageId}) //delete the page from page table
+                    .then(function (res) {
+                        model.websiteModel.deletePageForWebsite(websiteId, pageId)
+                            .then(function (websiteObj) {
 
-        return PageModel.remove({_id: pageId})
-            .then(function (res) {
-                model.websiteModel.deletePageForWebsite(websiteId, pageId)
-                    .then(function (websiteObj) {
-                        console.log("Website deleted and : "+websiteObj);
-                    })
+                            })
+                    });
             });
     }
 
@@ -74,7 +75,7 @@ module.exports = function () {
     }
 
     function deleteWidgetForPage(pageId, widgetId) {
-        return PageModel.update({_id: pageId},{$pull: {widgets: widgetId}});
+        return PageModel.update({_id: pageId},{$pull:{widgets: widgetId}});
     }
 
     function findAllWidgetsForPage(pageId) {
@@ -85,9 +86,16 @@ module.exports = function () {
 
 
     function reorderWidgetForPage(pageId, start, end) {
-        var widgetsForPage  = PageModel.findPageById(pageId).widgets;
-        console.log("$Page: "+pageId);
-        console.log("WIDGETS FOR PAGE: "+ widgetsForPage.length);
+        return PageModel.findById(pageId)
+            .then(function (pageObj) {
+                console.log("$Page: "+pageId);
+                var widgetsForPage = pageObj.widgets;
+                pageObj.widgets.splice(end-1, 0, pageObj.widgets.splice(start-1, 1)[0]);
+                PageModel.update({_id: pageId},{$set: {widgets: pageObj.widgets}})
+                    .then(function (res) {
+                        console.log("RESULT: "+res);
+                    });
+            });
     }
     
 }
