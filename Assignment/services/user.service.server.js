@@ -9,8 +9,6 @@ module.exports = function (app, model) {
 
     app.use(cookieParser());
 
-    app.use(passport.initialize());
-    app.use(passport.session());
 
 
     app.use(session({
@@ -19,6 +17,8 @@ module.exports = function (app, model) {
         saveUninitialized: true
     }));
 
+    app.use(passport.initialize());
+    app.use(passport.session());
 
     passport.serializeUser(serializeUser);
 
