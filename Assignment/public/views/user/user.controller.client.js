@@ -3,53 +3,100 @@
         .module("WebAppMaker")
         .controller("LoginController", LoginController)
         .controller("RegisterController", RegisterController)
-        .controller("ProfileController", ProfileController);
+        .controller("ProfileController", ProfileController)
+        .controller("LogoutController", LogoutController)
+        .controller("ProfileSecureController", ProfileSecureController);
 
-    function LoginController($location, UserService) {
+    function LoginController($location, UserService, $rootScope) {
         var vm = this;
         vm.login = login;
 
         // authenticate user
-        function login(checkUser) {
+        function login(username, password) {
 
-            UserService
-                .findUserByCredentials(checkUser.username, checkUser.password)
-                .then(
-                    function (res) {
-                        if(res =='0' || res.data.length == 0){
+            if(username == null || username.trim().length ==0 ){
+                vm.loginError = "Username cannot be blank";
+            }else if(password == null || password.trim().length ==0){
+                vm.loginError = "Password cannot be blank";
+            }else{
+                UserService
+                    .login(username, password)
+                    .then(
+                        function (res) {
+                            console.log("login after");
+                            console.log(res);
+
+                            if (res.status == 401) {
+                                vm.loginError = "No such user exists";
+                                $location.url("/login");
+                            } else if(res.data){
+                                // vm.user = res.data[0];
+                                vm.user = res.data;
+                                $rootScope.user = vm.user;
+                                vm.id = vm.user._id;
+                                console.log("ID: " + vm.id);
+                                $location.url("/user/" + vm.user._id);
+                            }else{
+                                vm.loginError = "No such user exists";
+                                $location.url("/login");
+                            }
+                        },
+                        function (err) {
+
+                            console.log("No user exists");
+                            console.log(err);
                             vm.loginError = "No such user exists";
                             $location.url("/login");
-                        }else{
-                            vm.user = res.data[0];
-                            vm.id = vm.user._id;
-                            console.log("ID: " + vm.id);
-                            $location.url("/user/" + vm.user._id);
                         }
-                    },
-                    function (res) {
-                        console.log("No user exists");
-                        vm.loginError = "No such user exists";
-                        $location.url("/login");
-                    }
-                )
+                    )
+            }
+
+
         }
     }
 
-    function RegisterController($location, UserService) {
+    function RegisterController($location, UserService, $rootScope) {
         var vm = this;
         vm.register = register;
 
-        function register(user) {
 
-            var promise = UserService.createUser(user);
+        function register(user, verifyPassword) {
+
+            console.log(user);
+
+            if(user ==null){
+                vm.registerError = "Username field cannot be blank";
+                return;
+            }
+
+            if (user.username == null || user.username == "") {
+                vm.registerError = "Username field cannot be blank";
+                return;
+            }
+            else if (user.password == null || user.password == "") {
+                vm.registerError = "Password field cannot be blank";
+                return;
+            }
+            else if (verifyPassword == null || verifyPassword == "") {
+                vm.registerError = "Verify password field cannot be blank";
+                return;
+            }
+            else if (user.password != verifyPassword) {
+                vm.registerError = "Passwords do not match";
+                return;
+            }
+
+            var promise = UserService.register(user);
             promise
                 .success(function (res) {
-                    if(res =='0'){
+                    if (res == '0') {
                         vm.registerError = "Registration failed. Please try again";
                         $location.url("/register");
-                    }else{
-                        console.log("RC: "+res);
+                    } else {
+                        console.log("RC: ");
+                        console.log(res);
                         vm.user = res;
+                        $rootScope.user = vm.user;
                         vm.id = vm.user._id;
                         console.log("ID: " + vm.id);
                         $location.url("/user/" + vm.user._id);
@@ -61,7 +108,7 @@
         }
     }
 
-    function ProfileController($location, UserService, $routeParams) {
+    function ProfileController($location, UserService, $routeParams,$rootScope) {
 
         var vm = this;
         vm.findUserById = findUserById;
@@ -69,8 +116,12 @@
         vm.deleteUser = deleteUser;
 
         function init() {
-            console.log("ID IN PROFILE: " + $routeParams.uid);
-            findUserById($routeParams.uid);
+        console.log("inside pc");
+            console.log($rootScope.user);
+
+            var userId = $rootScope.user._id;
+            // console.log("ID IN PROFILE: " + $routeParams.uid);
+            findUserById(userId);
         }
 
         init();
@@ -79,14 +130,14 @@
             var promise = UserService.findUserById(uid);
             promise
                 .success(function (res) {
-                    console.log("user retrieved: "+res.data);
-                    if(res.data == '0'){
+                    console.log("user retrieved: " + res.data);
+                    if (res.data == '0') {
                         console.log("error");
                         vm.loginError = "No such user exists";
                         $location.url("/login");
-                    }else{
+                    } else {
                         vm.user = res;
-                        console.log("PC user by id :"+ res);
+                        console.log("PC user by id :" + res);
                         vm.id = vm.user._id;
                         $location.url("/user/" + vm.user._id);
                     }
@@ -97,16 +148,16 @@
 
                 })
         }
-        
+
         function updateUser(user) {
-            console.log("Updating user: "+user._id);
-            var promise  = UserService.updateUser(user._id, user);
+            console.log("Updating user: " + user._id);
+            var promise = UserService.updateUser(user._id, user);
             promise
                 .success(function (res) {
-                    if(res == '0'){
+                    if (res == '0') {
                         vm.loginError = "No such user exists";
                         $location.url("/login");
-                    }else{
+                    } else {
                         vm.user = res;
                         vm.id = vm.user._id;
                         console.log("PROFILE ID: " + vm.id);
@@ -117,19 +168,49 @@
                     vm.profileMessage = "Profile Update failed. Please try again.";
                 })
         }
-        
+
         function deleteUser() {
-            console.log("Delete client: "+vm.user._id);
-            var promise  = UserService.deleteUser(vm.user._id);
+            console.log("Delete client: " + vm.user._id);
+            var promise = UserService.deleteUser(vm.user._id);
             promise
                 .success(function (res) {
-                    if(res == 200)
+                    if (res == 200)
                         $location.url("/login");
                 })
                 .error(function (res) {
                     vm.profileMessage = "Cannot delete account. Please try again.";
                 })
         }
-        
+
     }
+
+    function LogoutController($location, UserService, $routeParams, $rootScope) {
+        var vm = this;
+        vm.logout = logout;
+
+        function init() {
+            logout();
+        }
+
+        init();
+
+        function logout() {
+            UserService
+                .logout()
+                .then(
+                    function (res) {
+                        $rootScope.user = null;
+                        $location.url("/login");
+                    },
+                    function (error) {
+                        $rootScope.user = null;
+                        $location.url("/login");
+                    })
+        }
+    }
+
+    function ProfileSecureController($location, UserService, $routeParams, $rootScope) {
+
+    }
+
 })();

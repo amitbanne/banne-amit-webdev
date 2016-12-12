@@ -14,7 +14,8 @@ module.exports = function () {
         findWebsitesForUser: findWebsitesForUser,
         setModel: setModel,
         addWebsiteToUser: addWebsiteToUser,
-        deleteWebsiteForUser: deleteWebsiteForUser
+        deleteWebsiteForUser: deleteWebsiteForUser,
+        findUserByFacebookId:findUserByFacebookId
     };
     return api;
 
@@ -32,7 +33,7 @@ module.exports = function () {
     }
 
     function findUserByCredentials(username, password) {
-        return UserModel.find({username: username,password: password});
+        return UserModel.findOne({username: username,password: password});
     }
 
     function findUserByUsername(username) {
@@ -63,9 +64,13 @@ module.exports = function () {
     function addWebsiteToUser(userId, websiteId) {
         return UserModel.update({_id: userId},{$push:{websites: websiteId}});
     }
-    
+
     function deleteWebsiteForUser(userId, websiteId) {
         return UserModel.update({_id: userId},{$pull: {websites: websiteId}});
+    }
+    
+    function findUserByFacebookId (facebookId) {
+        return UserModel.findOne({'facebook.id': facebookId});
     }
 
 };

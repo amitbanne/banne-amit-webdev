@@ -108,6 +108,7 @@
 
         function createNew(widgetType){
 
+
             console.log("NewWidgetController: create new "+widgetType);
             vm.createOrUpdate = "CREATE";
             vm.widgetType = widgetType;
@@ -130,7 +131,7 @@
         function getDummyWidget(widgetType, pageId){
             var widget = {};
             if(widgetType == "HEADER"){
-                widget = {"type": "HEADER", "pageId": pageId, "size": 2, "text": ""};
+                widget = {"type": "HEADER", "pageId": pageId, "size": 2, "text": "Sample"};
             }else if(widgetType == "IMAGE"){
                 widget = {type: "IMAGE", "pageId": pageId, "width": "100%", "url": "http://lorempixel.com/400/200/", "text": "Sample Image"};
             }else if(widgetType == "YOUTUBE"){
@@ -138,7 +139,7 @@
             }else if(widgetType == "HTML"){
                 widget = {"type": "HTML", "pageId": pageId, "text": "<p>Lorem ipsum muspi meroL</p>"};
             }else if(widgetType == "TEXT"){
-                widget = {"type": "TEXT", "pageId": pageId, "text": "", "rows": 1, "placeholder":"", "formatted": false};
+                widget = {"type": "TEXT", "pageId": pageId, "text": "Sample", "rows": 1, "placeholder":"", "formatted": false};
             }
             return widget;
         }

@@ -57,6 +57,12 @@
         init();
 
         function createWebsite(userId, website){
+
+            if(website==null || website.name == null || website.name == ''){
+                vm.websiteNewMessage = "Website name cannot be blank";
+                return;
+            }
+
             var promise = WebsiteService.createWebsite(userId, website);
             promise
                 .success(function (websites) {
@@ -104,6 +110,12 @@
         init();
 
         function updateWebsite(userId, websiteId, website){
+
+            if(website==null || website.name == null || website.name == ''){
+                vm.websiteEditError = "Website name cannot be blank";
+                return;
+            }
+
             var promise = WebsiteService.updateWebsite(websiteId, website);
             promise
                 .success(function (msg) {

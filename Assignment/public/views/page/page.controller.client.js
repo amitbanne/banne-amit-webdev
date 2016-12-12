@@ -50,6 +50,12 @@
         init();
 
         function createPage(userId,websiteId, page){
+
+            if(page==null || page.name == null || page.name == ''){
+                vm.newPageError = "Page name cannot be blank";
+                return;
+            }
+
             var promise = PageService.createPage(websiteId,page);
             promise
                 .success(function (res) {
@@ -101,6 +107,12 @@
         init();
 
         function updatePage(userId,websiteId,pageId, page) {
+
+            if(page==null ||page.name == null || page.name == ''){
+                vm.editPageError = "Page name cannot be blank";
+                return;
+            }
+
             var promise = PageService.updatePage(pageId, page);
             promise
                 .success(function (status) {

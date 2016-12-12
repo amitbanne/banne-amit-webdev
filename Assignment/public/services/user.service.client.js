@@ -4,12 +4,6 @@
         .factory("UserService",UserService);
 
     function UserService($http){
-        var users = [
-            {_id: "123", username: "alice",    password: "alice",    firstName: "Alice",  lastName: "Wonder"  },
-            {_id: "234", username: "bob",      password: "bob",      firstName: "Bob",    lastName: "Marley"  },
-            {_id: "345", username: "charly",   password: "charly",   firstName: "Charly", lastName: "Garcia"  },
-            {_id: "456", username: "jannunzi", password: "jannunzi", firstName: "Jose",   lastName: "Annunzi" }
-        ];
 
         var api = {
             createUser: createUser,
@@ -17,9 +11,37 @@
             findUserByUsername: findUserByUsername,
             findUserByCredentials: findUserByCredentials,
             updateUser: updateUser,
-            deleteUser: deleteUser
+            deleteUser: deleteUser,
+            register: register,
+            login: login,
+            logout: logout,
+            loggedIn: loggedIn
         };
         return api;
+
+        function register(user) {
+            return $http.post("/api/register", user);
+        }
+        
+        function loggedIn() {
+            console.log("inside client loggedin");
+            return $http.get("/api/loggedIn");
+        }
+
+        function logout() {
+            return $http.post("/api/logout");
+        }
+
+        function login(username, password) {
+            console.log("Login client service");
+            var user = {
+                username: username,
+                password: password
+            };
+            console.log(user);
+            //console.log(user);
+            return $http.post('/api/login', user);
+        }
 
         // create a new user
         function createUser(u){
