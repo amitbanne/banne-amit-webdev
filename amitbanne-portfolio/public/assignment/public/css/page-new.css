@@ -1,0 +1,47 @@
+.navbar {
+    /*background-color: #0083c3;*/
+}
+
+.navbar-default .navbar-brand {
+    color: black;
+}
+
+.navbar-default .navbar-text {
+    color: black;
+}
+
+a.list-group-item{
+    color: #0083c3;
+    margin-right: 15px;
+    border: none;
+}
+
+
+/*footer text*/
+#navbar-text-footer{
+    color: #0083c3;
+}
+
+.new-page-container{
+    margin-top: 65px;
+    margin-right: 39px;
+    margin-left: 2%;
+}
+
+.navbar-inner{
+    margin-right: 15px;
+}
+
+
+a.list-group-item{
+    color: #0083c3;
+    margin-right: 15px;
+}
+
+#glyphi-foot{
+    color:#0083c3;
+}
+
+.glyphi{
+    color: black;
+}

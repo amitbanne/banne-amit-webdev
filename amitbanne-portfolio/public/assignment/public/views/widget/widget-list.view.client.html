@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <meta charset="UTF-8">
+    <title>Widgets</title>
+    <link rel="stylesheet" href="../css/widget-list.css">
+</head>
+<body>
+<nav class="navbar navbar-default navbar-fixed-top">
+    <div class="container-fluid">
+        <div class="navbar-inner">
+            <div class="col-sm-12">
+                <div class="row">
+                    <p class="navbar-text pull-left">
+                        <a href="#/user/{{model.userId}}/website/{{model.websiteId}}/page"
+                           class="glyphicon glyphicon-chevron-left glyphi"></a>
+                    </p>
+                    <a class="navbar-brand" href="#/user/{{model.userId}}/website/{{model.websiteId}}/page/{{model.pageId}}/widget/">Widgets</a>
+                    <p class="navbar-text pull-right">
+                        <a href="#/user/{{model.userId}}/website/{{model.websiteId}}/page/{{model.pageId}}/widget/new"
+                           class="glyphicon glyphicon-plus glyphi"></a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>
+
+<div  class="container-fluid right-margin" id="widget-content">
+
+<br/>
+
+    <form class="form-group">
+
+        <div ng-show="model.widgetListMessage"  class="alert alert-danger" role="alert">{{model.widgetListMessage}}</div>
+        <div class="sortableWidgets">
+            <div style="display: none"></div>
+
+        <div ng-switch="widget.type" ng-repeat="widget in model.widgets" class="list-group">
+            <li class="list-group-item">
+                <div class="block1">
+                    <div ng-switch="widget.size" ng-switch-when="HEADER">
+                        <h1 ng-switch-when="1">{{widget.text}}</h1>
+                        <h2 ng-switch-when="2">{{widget.text}}</h2>
+                        <h3 ng-switch-when="3">{{widget.text}}</h3>
+                        <h4 ng-switch-when="4">{{widget.text}}</h4>
+                        <h5 ng-switch-when="5">{{widget.text}}</h5>
+                        <h6 ng-switch-when="6">{{widget.text}}</h6>
+                    </div>
+
+                    <div ng-switch-when="IMAGE">
+                        <img src="{{model.checkSafeImage(widget.url)}}" id="image" class="image" width="{{widget.width}}">
+                    </div>
+
+                    <div ng-switch-when="HTML" ng-bind-html="model.checkSafeHTML(widget.text)">
+                    </div>
+                    <div ng-switch-when="YOUTUBE" class="youtube-widget">
+                        <iframe class="video-frame" height="400" width="{{widget.width}}"
+                                src="{{model.formatYoutubeLink(widget.url)}}"
+                                frameborder="0" allowfullscreen></iframe>
+                    </div>
+                    <div ng-switch-when="TEXT">
+                        <div ng-if="widget.formatted" text-angular
+                             ta-toolbar="[['h1','h2','h3'],['bold','italics','underline','strikeThrough'],
+                                          ['ul','ol'],['justifyLeft','justifyCenter','justifyRight','justifyFull'],
+                                          ['indent','outdent'],['html']]"></div>
+
+                        <input ng-if="!widget.formatted && (!widget.rows || widget.rows==1)"
+                               placeholder="{{widget.placeholder}}" class="form-control">
+                        <textarea ng-if="!widget.formatted && (widget.rows > 1)"
+                                  rows="{{widget.rows}}" placeholder="{{widget.placeholder}}"
+                                  class="form-control">{{widget.text}}</textarea>
+                    </div>
+                    <div class="block2">
+                        <a class="glyphicon glyphicon-align-justify pull-right black"></a>
+
+                        <a class="glyphicon glyphicon-cog pull-right blue"
+                           href ng-click="model.updateWidget(widget)"></a>
+                    </div>
+
+                    </div>
+                </li>
+        </div>
+        </div>
+</div>
+    </form>
+</div>
+
+
+<nav class="navbar navbar-default navbar-fixed-bottom">
+    <div class="container-fluid">
+        <div class="navbar-inner">
+            <div class="col-sm-12" id="footer-div">
+                <div>
+                    <p id="navbar-text-footer-left" class="navbar-text pull-left">
+                        <a href="#" class="glyphicon glyphicon-play pull-left black"></a>
+                        <a href="#" id="glyphi-left" class="glyphicon glyphicon-eye-open pull-left black"></a>
+                    </p>
+                </div>
+                <div>
+                    <p id="navbar-text-footer" class="navbar-text pull-right">
+                        <a href="#/user/{{model.userId}}" class="glyphicon glyphicon-user glyphi-1"></a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>
+</body>
+</html>

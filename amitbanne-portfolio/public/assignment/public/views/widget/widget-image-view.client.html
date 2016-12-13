@@ -1,0 +1,29 @@
+<div class="widget-edit-container">
+    <form>
+    <div class="form-group">
+        <div class="col-sm-12">
+            <div class="row">
+                <!--<label for="widgetURL">URL</label>-->
+                <!--<input ng-models="models.widget.url" type="text" id="widgetURL" class="form-control" placeholder="http://youtube.com"><br>-->
+                <label for="width">Width</label>
+                <input ng-model="model.widget.width" type="text" id="width" class="form-control" placeholder="100%"><br>
+            </div>
+        </div>
+    </div>
+    </form>
+    <form action="/api/upload"  method="post" enctype="multipart/form-data">
+        <label for="widgetImageID">Upload</label>
+        <input name="widgetImage" type="file" class="form-control" id="widgetImageID"/>
+        <input  name="widgetId" value="{{model.widgetId}}"   style="display: none"/>
+        <input name="pageId" value="{{model.pageId}}" style="display: none"/>
+        <input name="websiteId" value="{{model.websiteId}}" style="display: none"/>
+        <input name="userId" value="{{model.userId}}" style="display: none"/>
+        <input name="name" value="{{model.userId}}" style="display: none"/>
+        <button type="submit" class="btn btn-primary btn-block">Upload Image</button>
+        <a ng-click="model.deleteWidget(model.widget._id)"
+           class="btn btn-danger btn-block">Delete</a>
+    </form>
+
+</div>
+
+

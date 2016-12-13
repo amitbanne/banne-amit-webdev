@@ -1,0 +1,39 @@
+<link rel="stylesheet" href="../css/profile.css">
+
+<nav class="navbar navbar-default navbar-fixed-top">
+    <div class="container-fluid">
+        <div class="navbar-inner">
+            <a class="navbar-brand" href="#/user/{{model.user._id}}">Profile</a>
+            <p class="navbar-text pull-right">
+                <a href ng-click="model.updateUser(model.user)" id="glyphi-head" class="glyphicon glyphicon-ok glyphi"></a>
+            </p>
+        </div>
+    </div>
+</nav>
+
+<form>
+    <div class="container">
+        <div ng-show="model.profileMessage" class="alert alert-danger" role="alert">{{model.profileMessage}}</div>
+        <input ng-model="model.user.username" type="text" id="username"  class="form-control"><br>
+        <input type="email" ng-model="model.user.email" class="form-control" placeholder="alice@gmail.com"><br>
+        <input ng-model="model.user.firstName" type="text" id="first" class="form-control" ><br>
+        <input ng-model="model.user.lastName" type="text" id="last" class="form-control" ><br>
+        <a href="#/user/{{model.user._id}}/website" class="btn btn-primary btn-block">Websites</a>
+        <a href="#/logout" class="btn btn-danger btn-block">Logout</a>
+        <a href ng-click="model.deleteUser()" class="btn btn-warning btn-block">Delete Account</a>
+    </div>
+</form>
+
+<nav class="navbar navbar-default navbar-fixed-bottom">
+    <div class="container-fluid">
+        <div class="navbar-inner">
+            <div class="col-sm-12">
+                <div class="row">
+                    <p class="navbar-text pull-right">
+                        <span id="glyphi-foot" class="glyphicon glyphicon-user glyphi"></span>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>
