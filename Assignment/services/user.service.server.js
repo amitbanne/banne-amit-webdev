@@ -9,8 +9,6 @@ module.exports = function (app, model) {
 
     app.use(cookieParser());
 
-    app.use(passport.initialize());
-    app.use(passport.session());
 
 
     app.use(session({
@@ -19,6 +17,8 @@ module.exports = function (app, model) {
         saveUninitialized: true
     }));
 
+    app.use(passport.initialize());
+    app.use(passport.session());
 
     passport.serializeUser(serializeUser);
 
@@ -58,7 +58,8 @@ module.exports = function (app, model) {
     var facebookConfig = {
         clientID: "1693530404291551",
         clientSecret: "e8783719df65c58b824cae078886962d",
-        callbackURL: "http://127.0.0.1:3000/auth/facebook/callback"
+        callbackURL: "http://127.0.0.1:3000/auth/facebook/callback",
+        profileFields: ['id', 'email', 'gender', 'name']
     };
 
     app.get('/auth/facebook/callback',
@@ -79,13 +80,18 @@ module.exports = function (app, model) {
                         return done(null, facebookUser);
                     }
                     else {
+                        var email = profile.emails[0].value;
+                        var emailParts = email.split("@");
                         facebookUser = {
-                            username: profile.displayName.replace('/ /g', ''),
+                            username:  emailParts[0],
+                            firstName: profile.name.givenName,
+                            lastName:  profile.name.familyName,
+                            email:     email,
+                            dateCreated: new Date(),
                             facebook: {
-                                token: token,
-                                id: profile.id
-                            },
-                            dateCreated : new Date()
+                                id:    profile.id,
+                                token: token
+                            }
                         };
                         model.userModel
                             .createUser(facebookUser)
